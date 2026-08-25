@@ -10,25 +10,10 @@ export const metadata: Metadata = {
 
 const STORY = [
   {
-    year: "2020",
+    year: "2026",
     title: "The Beginning of Social Buzz",
     body: "We started as two people — a designer and a media buyer — tired of watching good creative get lost between agencies that didn't talk to each other.",
-  },
-  {
-    year: "2021",
-    title: "Early Systems & Creative Validation",
-    body: "We launched our first campaign templates to immediate success, proving that growing brands crave one team that handles design, media and web together.",
-  },
-  {
-    year: "2022",
-    title: "Web & Product Enters the Mix",
-    body: "Development joined the desk. Campaigns stopped ending at the ad and started shipping as full sites the client's team could actually run.",
-  },
-  {
-    year: "2023",
-    title: "Events & Full-Service Scale",
-    body: "Event execution rounded out the offer. One brief, one calendar, five disciplines — the model we still run on today.",
-  },
+  }
 ];
 
 const VALUES = [

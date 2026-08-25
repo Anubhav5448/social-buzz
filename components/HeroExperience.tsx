@@ -64,10 +64,10 @@ const HEADING_SIZE: Record<HeadingLevel, string> = {
 };
 
 const HEADLINE_COLORS = [
-  { label: "Default", value: "#12121A" },
+  { label: "Default", value: "#F0F0F0" },
   { label: "Red", value: "#E8462F" },
   { label: "Amber", value: "#C97A3D" },
-  { label: "Blue", value: "#3E5FCE" },
+  { label: "Blue", value: "#12121A" },
 ] as const;
 export default function HeroExperience() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -242,7 +242,7 @@ export default function HeroExperience() {
       <div
         className="absolute inset-[-24px] bg-cover bg-center transition-transform duration-200 ease-out will-change-transform"
         style={{
-          backgroundImage: "url('/background.jpg')",
+          backgroundImage: "url('/bg.jpg')",
           transform: `rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg) scale(1.06)`,
           filter: "url(#hero-water-filter)",
         }}
@@ -254,7 +254,7 @@ export default function HeroExperience() {
       <div className="relative z-10 container-page flex-1 flex flex-col items-center justify-center text-center py-16">
         <div className="relative inline-block">
           <h1
-            className={`font-hero ${HEADING_SIZE[headingLevel]} leading-[1.02] tracking-tight text-black max-w-4xl md:max-w-5xl mx-auto`}
+            className={`font-hero ${HEADING_SIZE[headingLevel]} leading-[1.02] tracking-tight text-white max-w-4xl md:max-w-5xl mx-auto`}
           >
             We build the signal{" "}
             <span className="relative inline-block">
@@ -389,14 +389,14 @@ export default function HeroExperience() {
           </div>
         </div>
 
-        <p className="font-hero mt-7 text-lg text-ink/75 max-w-lg leading-relaxed mx-auto">
+        <p className="font-hero mt-7 text-lg text-white/75 max-w-lg leading-relaxed mx-auto">
           Digital marketing, design, web development, performance media and
           events — planned together so every piece of work amplifies the next.
         </p>
       </div>
 
       {/* Footer row: live studio clock + click-to-copy email */}
-      <div className="relative z-10 container-page pb-8 flex items-center justify-between text-ink/80">
+      <div className="relative z-10 container-page pb-8 flex items-center justify-between text-white/80">
         <div className="font-mono text-xs uppercase tracking-[0.1em] flex items-center gap-2">
           <ClockIcon />
           {STUDIO_TIMEZONE_LABEL} {time}

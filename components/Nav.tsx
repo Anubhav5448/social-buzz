@@ -102,6 +102,13 @@ export default function Nav() {
     setOpen(false);
   }, [pathname]);
 
+
+
+  // True once the header has faded in enough that dark text stays
+  // readable against it. Below this, we're still looking at the raw
+  // hero image behind a near-transparent header, so nav text goes white.
+  const scrolled = scrollProgress > 0.15;
+
   // Interpolated header background/border/shadow — driven by scrollProgress
   // rather than a class toggle, so the change reads as a smooth fade.
   // Capped well below 1 so the header stays translucent (you can still see
@@ -143,8 +150,14 @@ export default function Nav() {
                   className="group flex flex-col items-center gap-1.5"
                 >
                   <span
-                    className={`text-[15px] transition-colors ${
-                      active ? "text-ink font-medium" : "text-ink/65 group-hover:text-ink"
+                    className={`text-[15px] transition-colors duration-300 ${
+                      scrolled
+                        ? active
+                          ? "text-ink font-medium"
+                          : "text-ink/65 group-hover:text-ink"
+                        : active
+                        ? "text-white font-medium"
+                        : "text-white/80 group-hover:text-white"
                     }`}
                   >
                     {l.label}
