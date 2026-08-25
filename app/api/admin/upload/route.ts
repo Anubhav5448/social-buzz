@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
-import crypto from "crypto";
 import { isAdminRequest } from "@/lib/requireAdmin";
+import cloudinary from "@/lib/cloudinary";
 
 const MAX_IMAGE_BYTES = 8 * 1024 * 1024; // 8MB
 const MAX_VIDEO_BYTES = 80 * 1024 * 1024; // 80MB
@@ -41,15 +39,18 @@ export async function POST(req: NextRequest) {
     }
 
     const bytes = Buffer.from(await file.arrayBuffer());
-    const ext = path.extname(file.name) || (isImage ? ".jpg" : ".mp4");
-    const filename = `${Date.now()}-${crypto.randomBytes(6).toString("hex")}${ext}`;
 
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    await mkdir(uploadDir, { recursive: true });
-    await writeFile(path.join(uploadDir, filename), bytes);
+    // Cloudinary needs a data URI, not a raw buffer, when uploading in-memory.
+    const base64 = bytes.toString("base64");
+    const dataUri = `data:${file.type};base64,${base64}`;
+
+    const uploaded = await cloudinary.uploader.upload(dataUri, {
+      folder: "signalhouse-agency",
+      resource_type: isImage ? "image" : "video",
+    });
 
     return NextResponse.json({
-      url: `/uploads/${filename}`,
+      url: uploaded.secure_url,
       media_type: isImage ? "image" : "video",
     });
   } catch (err) {
