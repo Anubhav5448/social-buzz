@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="container-page pt-16 pb-14">
+      <section className="container-page pt-32 md:pt-40 pb-14">
         <div className="eyebrow mb-4">Services</div>
         <h1 className="font-display text-4xl md:text-6xl max-w-2xl leading-[1.05]">
           Everything we do, in one place.
@@ -38,37 +38,47 @@ export default function ServicesPage() {
         <section
           id={s.slug}
           key={s.slug}
-          className="section-rule scroll-mt-20"
+          className="relative overflow-hidden scroll-mt-20"
         >
-          <div className="container-page py-16 grid md:grid-cols-12 gap-10">
+          {/* Background photo + dark overlay */}
+          <div className="absolute inset-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={s.heroImage} alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-ink/75" />
+          </div>
+
+          <div className="relative z-10 container-page py-16 grid md:grid-cols-12 gap-10">
             <div className="md:col-span-4">
               <div className="font-mono text-[11px] tracking-[0.18em] text-signal mb-4">
                 {s.tag}
               </div>
-              <h2 className="font-display text-3xl md:text-4xl leading-tight">
+              <h2 className="font-display text-3xl md:text-4xl leading-tight text-paper">
                 {s.name}
               </h2>
             </div>
 
             <div className="md:col-span-8">
-              <p className="text-lg text-ink/70 leading-relaxed max-w-2xl mb-8">
+              <p className="text-lg text-paper/80 leading-relaxed max-w-2xl mb-8">
                 {s.summary}
               </p>
               <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
                 {s.points.map((p) => (
-                  <li key={p} className="flex gap-3 text-sm text-ink/70">
+                  <li key={p} className="flex gap-3 text-sm text-paper/75">
                     <span className="text-signal mt-1">—</span>
                     <span>{p}</span>
                   </li>
                 ))}
               </ul>
               <div className="mt-9 flex flex-wrap items-center gap-4">
-                <Link href="/contact" className="btn-outline inline-flex">
+                <Link
+                  href="/contact"
+                  className="btn-outline inline-flex !border-paper/60 !text-paper hover:!border-signal hover:!text-signal"
+                >
                   Ask about {s.name}
                 </Link>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="font-mono text-[12px] uppercase tracking-[0.08em] text-ink/60 hover:text-signal transition-colors"
+                  className="font-mono text-[12px] uppercase tracking-[0.08em] text-paper/70 hover:text-signal transition-colors"
                 >
                   View full details →
                 </Link>

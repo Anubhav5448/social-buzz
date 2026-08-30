@@ -4,12 +4,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-// "Home" is reachable via the logo, so it's left out of the link list —
-// matching the reference design, where the wordmark itself is the home link.
 const LINKS = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About Us" },
   { href: "/services", label: "Services" },
   { href: "/blog", label: "Blog" },
-  { href: "/about", label: "About Us" },
   { href: "/contact", label: "Contact Us" },
 ];
 
@@ -40,7 +39,7 @@ function BrandMark() {
         />
       ))}
     </svg>
-  ); 
+  );
 }
 
 function CloseIcon() {
@@ -102,12 +101,15 @@ export default function Nav() {
     setOpen(false);
   }, [pathname]);
 
-
-
   // True once the header has faded in enough that dark text stays
   // readable against it. Below this, we're still looking at the raw
   // hero image behind a near-transparent header, so nav text goes white.
-  const scrolled = scrollProgress > 0.15;
+  // Only the home page has a dark hero photo behind the header — every
+  // other page (Services, Blog, About, Contact) has a plain light
+  // background from the very top, so white nav text would disappear
+  // there. Force dark/ink nav styling on every page except home.
+  const isHomePage = pathname === "/";
+  const scrolled = !isHomePage || scrollProgress > 0.15;
 
   // Interpolated header background/border/shadow — driven by scrollProgress
   // rather than a class toggle, so the change reads as a smooth fade.
@@ -134,9 +136,11 @@ export default function Nav() {
         <div className="flex items-center justify-between gap-4 h-16 md:h-[72px]">
           <Link
             href="/"
-            className="flex items-center gap-2 font-nav text-lg md:text-xl font-semibold tracking-tight shrink-0"
+            className={`flex items-center gap-2 font-nav text-lg md:text-xl font-semibold tracking-tight shrink-0 transition-colors duration-300 ${
+              scrolled ? "text-ink" : "text-white"
+            }`}
           >
-            <BrandMark />  
+            <BrandMark />
             Social Buzz<span className="text-signal">.</span>
           </Link>
 
@@ -187,9 +191,21 @@ export default function Nav() {
             className="md:hidden flex flex-col gap-1.5 w-8 h-8 items-end justify-center shrink-0"
             onClick={() => setOpen(true)}
           >
-            <span className="h-0.5 w-6 bg-ink" />
-            <span className="h-0.5 w-4 bg-ink" />
-            <span className="h-0.5 w-6 bg-ink" />
+            <span
+              className={`h-0.5 w-6 transition-colors duration-300 ${
+                scrolled ? "bg-ink" : "bg-white"
+              }`}
+            />
+            <span
+              className={`h-0.5 w-4 transition-colors duration-300 ${
+                scrolled ? "bg-ink" : "bg-white"
+              }`}
+            />
+            <span
+              className={`h-0.5 w-6 transition-colors duration-300 ${
+                scrolled ? "bg-ink" : "bg-white"
+              }`}
+            />
           </button>
         </div>
       </div>
@@ -218,7 +234,7 @@ export default function Nav() {
             <Link
               href="/"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2 font-nav text-lg font-semibold tracking-tight"
+              className="flex items-center gap-2 font-nav text-lg font-semibold tracking-tight text-ink"
             >
               <BrandMark />
               Social Buzz<span className="text-signal">.</span>

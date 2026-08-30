@@ -50,7 +50,7 @@ const FAQS = [
 export default function AboutPage() {
   return (
     <>
-      <section className="container-page pt-16 pb-10">
+      <section className="container-page pt-32 md:pt-40 pb-10">
         <div className="eyebrow mb-4">About Us</div>
         <h1 className="font-display text-4xl md:text-6xl max-w-2xl leading-[1.05]">
           Started as a two-person design desk. Still runs like one.

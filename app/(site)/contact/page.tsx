@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
   return (
-    <section className="container-page py-16">
+    <section className="container-page pt-32 md:pt-40 pb-16">
       <div className="eyebrow mb-4">Contact Us</div>
       <h1 className="font-display text-4xl md:text-6xl max-w-2xl leading-[1.05] mb-6">
         Let's get your brand on air.
