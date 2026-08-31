@@ -34,7 +34,6 @@ const TEAM = [
 const ACHIEVEMENTS = [
   { number: "120+", label: "Campaigns launched" },
   { number: "48", label: "Websites shipped" },
-  { number: "6", label: "Years running" },
   { number: "35+", label: "Brands served" },
 ];
 
@@ -56,7 +55,7 @@ export default function AboutPage() {
           Started as a two-person design desk. Still runs like one.
         </h1>
         <p className="mt-6 text-ink/60 max-w-2xl text-lg leading-relaxed">
-          Social Buzz began in 2020 when a designer and a media buyer got
+          Social Buzz began in 2026 when a designer and a media buyer got
           tired of watching good creative get lost between agencies that
           didn't talk to each other. We built a studio where strategy,
           design, development, paid media and event execution report to the
