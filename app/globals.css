@@ -32,8 +32,8 @@ html.lenis body {
 }
 
 body {
-  background-color: #FAF9F4;
-  color: #12121A;
+  background-color: #12121A;
+  color: #FAF9F4;
   /* font-hero and font-nav reuse the same loaded fonts as font-display
      and font-body — see app/layout.tsx for why. */
   --font-hero: var(--font-display);
@@ -62,7 +62,7 @@ body {
 }
 
 .section-rule {
-  border-top: 1px solid #e4e1d3;
+  border-top: 1px solid #2A2A33;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -79,4 +79,24 @@ input:focus-visible,
 textarea:focus-visible {
   outline: 2px solid #ff4e1f;
   outline-offset: 2px;
+}
+
+/* Dark diagonal-stripe hero band, used on interior page heroes */
+.hero-band {
+  position: relative;
+  overflow: hidden;
+  background-color: #12121a;
+}
+.hero-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    135deg,
+    rgba(250, 249, 244, 0.04) 0px,
+    rgba(250, 249, 244, 0.04) 1px,
+    transparent 1px,
+    transparent 36px
+  );
+  pointer-events: none;
 }

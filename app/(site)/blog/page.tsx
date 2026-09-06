@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getPublishedPosts } from "@/lib/blogPosts";
 import BlogCard from "@/components/BlogCard";
 import BlogCardMedia from "@/components/BlogCardMedia";
@@ -30,23 +31,32 @@ export default async function BlogPage() {
   const posts = await getPublishedPosts();
 
   return (
-    <section className="container-page pt-32 md:pt-40 pb-16">
-      <div className="eyebrow mb-4">Blog</div>
-      <h1 className="font-display text-4xl md:text-6xl max-w-2xl leading-[1.05] mb-6">
-        Notes from the desk.
-      </h1>
-      <p className="text-ink/60 max-w-xl text-lg leading-relaxed mb-14">
-        Articles, tips, case studies and industry updates — updated on an
-        ongoing basis as we ship new work.
-      </p>
+    <>
+      {/* BLOG HERO */}
+      <section className="hero-band py-24 md:py-28 text-center">
+        <div className="relative z-10 container-page">
+          <h1 className="font-display font-bold text-4xl md:text-6xl leading-[1.15] text-ink max-w-3xl mx-auto">
+            Our <span className="text-signal">Blog</span>
+          </h1>
+          <div className="mt-6 flex items-center justify-center gap-2 font-mono text-sm text-ink/50">
+            <Link href="/" className="hover:text-signal transition-colors">
+              Home
+            </Link>
+            <span aria-hidden="true">›</span>
+            <span className="text-ink font-medium">Blog</span>
+          </div>
+        </div>
+      </section>
 
+      {/* BLOG TILES */}
+      <section className="container-page pb-20">
       {posts.length === 0 ? (
         <p className="text-ink/50">No posts published yet — check back soon.</p>
       ) : (
-        <div className="space-y-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {posts.map((post) => (
             <BlogCard key={post.slug} href={`/blog/${post.slug}`}>
-              <div className="order-2 md:order-1 flex flex-col h-full">
+              <div className="flex flex-col h-full">
                 <div className="flex items-center gap-3 mb-4 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/45">
                   <time dateTime={post.created_at}>{formatDate(post.created_at)}</time>
                 </div>
@@ -65,7 +75,7 @@ export default async function BlogPage() {
                 </div>
               </div>
 
-              <div className="order-1 md:order-2">
+              <div>
                 <BlogCardMedia
                   src={post.media_url}
                   alt={post.title}
@@ -77,5 +87,6 @@ export default async function BlogPage() {
         </div>
       )}
     </section>
+    </>
   );
 }

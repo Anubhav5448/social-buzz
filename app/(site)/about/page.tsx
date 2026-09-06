@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import { SERVICES } from "@/lib/services";
 
 export const metadata: Metadata = {
   title: "About Us — Social Buzz",
@@ -8,20 +9,13 @@ export const metadata: Metadata = {
     "Our story, mission, team, values and achievements — the people behind Social Buzz.",
 };
 
-const STORY = [
-  {
-    year: "2026",
-    title: "The Beginning of Social Buzz",
-    body: "We started as two people — a designer and a media buyer — tired of watching good creative get lost between agencies that didn't talk to each other.",
-  }
+const ABOUT_BADGES = [
+  { icon: "✓", title: "Proven Process", subtitle: "Quality & Consistency" },
+  { icon: "★", title: "Top Rated Studio", subtitle: "Client Reviews" },
+  { icon: "↗", title: "120+ Campaigns", subtitle: "Shipped & Counting" },
 ];
 
-const VALUES = [
-  { title: "Plain numbers", body: "We report what moved and what didn't. No metric gets dressed up to look better than it is." },
-  { title: "One team, not five vendors", body: "Design, media and web sit at the same table, so nothing gets lost in a hand-off." },
-  { title: "Small enough to move fast", body: "Decisions happen in days, not committee cycles. You talk to the people doing the work." },
-  { title: "Built to last past launch", body: "We hand over sites and systems the client's own team can actually run." },
-];
+
 
 const TEAM = [
   { name: "Aarav Mehta", role: "Founder & Strategy Lead" },
@@ -31,128 +25,121 @@ const TEAM = [
   { name: "Devika Rao", role: "Events & Operations" },
 ];
 
-const ACHIEVEMENTS = [
-  { number: "120+", label: "Campaigns launched" },
-  { number: "48", label: "Websites shipped" },
-  { number: "35+", label: "Brands served" },
-];
-
-const FAQS = [
-  { q: "What services does Social Buzz provide?", a: "Digital marketing, graphic design, web development, performance marketing and event management — run from one desk on one brief." },
-  { q: "How long does a typical project take?", a: "Most web builds ship in 4–6 weeks; ongoing marketing and media retainers run monthly with a shared calendar." },
-  { q: "Do you work with startups or established companies?", a: "Both. We've shipped first-time brand systems for early-stage startups and run always-on media for established companies." },
-  { q: "What is your design and development process?", a: "Discovery and strategy, then design, build and media in parallel against the same brief, with weekly check-ins throughout." },
-  { q: "Can you redesign an existing brand or website?", a: "Yes — we regularly rebuild existing sites and refresh brand systems without starting the underlying strategy from zero." },
-  { q: "Do you provide ongoing support after launch?", a: "Yes, every build hands off with documentation and an optional monthly support and iteration retainer." },
+const MISSION_VISION = [
+  {
+    title: "Mission",
+    body: "To run strategy, design, development, media and events from one desk on one brief — so every brand we work with ships work that looks and performs like a single idea, not five disconnected ones.",
+  },
+  {
+    title: "Vision",
+    body: "To be the studio ambitious brands call first — small enough to move fast, senior enough to be trusted with the whole brief, not just a slice of it.",
+  },
 ];
 
 export default function AboutPage() {
   return (
     <>
-      <section className="container-page pt-32 md:pt-40 pb-10">
-        <div className="eyebrow mb-4">About Us</div>
-        <h1 className="font-display text-4xl md:text-6xl max-w-2xl leading-[1.05]">
-          Started as a two-person design desk. Still runs like one.
-        </h1>
-        <p className="mt-6 text-ink/60 max-w-2xl text-lg leading-relaxed">
-          Social Buzz began in 2026 when a designer and a media buyer got
-          tired of watching good creative get lost between agencies that
-          didn't talk to each other. We built a studio where strategy,
-          design, development, paid media and event execution report to the
-          same brief — so a campaign looks and performs like one idea, not
-          five.
-        </p>
-      </section>
-
-      {/* Hero image */}
-      <section className="container-page pb-16">
-        <div className="relative w-full h-[280px] md:h-[420px] rounded-2xl overflow-hidden bg-paperdim">
+      {/* ABOUT HERO */}
+      <section className="relative w-full overflow-hidden min-h-[380px] md:min-h-[440px] flex items-center">
+        <div className="absolute inset-0">
           <Image
             src="/about/hero.jpg"
             alt="Inside Social Buzz studio"
             fill
             priority
             className="object-cover"
-            sizes="(min-width: 768px) 1180px, 100vw"
+            sizes="100vw"
           />
+          <div className="absolute inset-0 bg-paper/85" />
+        </div>
+
+        <div className="relative z-10 container-page py-32 md:py-40">
+          <div className="inline-flex items-center gap-2 rounded-full border border-signal/40 bg-signal/10 px-4 py-1.5 mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-signal" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-signal">
+              About
+            </span>
+          </div>
+
+          <h1 className="font-display font-bold text-5xl md:text-7xl leading-[1.02] max-w-3xl">
+            <span className="text-ink">Social</span>{" "}
+            <span className="text-signal">Buzz.</span>
+          </h1>
+
+          <p className="mt-6 text-ink/70 max-w-xl text-lg leading-relaxed">
+            One desk, five disciplines — built for every brand ready to grow.
+          </p>
+
+          <div className="mt-9 flex flex-wrap gap-4">
+            <Link
+              href="/social-buzz-profile.pdf"
+              className="btn-outline !border-ink/50 !text-ink hover:!border-signal hover:!text-signal inline-flex items-center gap-2"
+            >
+              Download Profile
+              <span aria-hidden="true">↓</span>
+            </Link>
+            <Link href="/contact" className="btn-primary bg-signal hover:bg-paper hover:text-ink">
+              Contact Us
+            </Link>
+          </div>
         </div>
       </section>
 
-      {/* Story timeline */}
-      <section className="section-rule bg-ink text-paper">
-        <div className="container-page py-16">
-          <div className="eyebrow text-paper/50 mb-4">Our story</div>
-          <h2 className="font-display text-3xl md:text-4xl leading-tight max-w-xl mb-12">
-            How we got here
-          </h2>
-          <div className="grid md:grid-cols-12 gap-10">
-            <div className="md:col-span-1 flex md:flex-col items-center md:items-center gap-2">
-              <div className="hidden md:block w-px flex-1 bg-paper/15" />
+      {/* DETAILED ABOUT US */}
+      <section className="section-rule bg-paper text-ink">
+        <div className="container-page py-20">
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <div className="relative w-full h-[300px] md:h-[420px]">
+              <Image
+                src="/about/illustration.png"
+                alt="Illustration of the Social Buzz team at work"
+                fill
+                className="object-contain"
+                sizes="(min-width: 768px) 50vw, 100vw"
+              />
             </div>
-            <div className="md:col-span-11 space-y-12">
-              {STORY.map((s) => (
-                <div key={s.year} className="grid md:grid-cols-12 gap-4 md:gap-10 relative">
-                  <div className="md:col-span-2 flex items-center gap-3">
-                    <span className="w-2.5 h-2.5 rounded-full bg-signal shrink-0" />
-                    <span className="font-display text-2xl text-paper/80">{s.year}</span>
+
+            <div>
+              <div className="eyebrow text-signal mb-3">The Story</div>
+              <h2 className="font-display text-4xl md:text-5xl mb-6">
+                About Us
+              </h2>
+              <p className="text-ink/65 leading-relaxed mb-10 max-w-xl">
+                Social Buzz is home for ambitious brands at every stage of
+                growth. As a full-service studio, our focus is to provide a
+                360-degree range of solutions so no business owner has to look
+                elsewhere. We run digital marketing, graphic design, web
+                development, performance marketing, influencer marketing,
+                photography and videography, and event management — all from
+                one desk, on one brief.
+              </p>
+
+              <div className="flex flex-wrap gap-8">
+                {ABOUT_BADGES.map((b) => (
+                  <div key={b.title} className="flex items-center gap-3">
+                    <span className="w-9 h-9 rounded-full bg-ink/10 border border-ink/15 flex items-center justify-center text-signal text-sm shrink-0">
+                      {b.icon}
+                    </span>
+                    <div>
+                      <div className="font-display text-sm text-ink">{b.title}</div>
+                      <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink/45">
+                        {b.subtitle}
+                      </div>
+                    </div>
                   </div>
-                  <div className="md:col-span-10">
-                    <h3 className="font-display text-xl md:text-2xl mb-2">{s.title}</h3>
-                    <p className="text-paper/60 leading-relaxed max-w-2xl">{s.body}</p>
-                  </div>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Values */}
-      <section className="section-rule">
-        <div className="container-page py-16">
-          <div className="eyebrow mb-3">What we hold to</div>
-          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
-            Values
-          </h2>
-          <div className="grid sm:grid-cols-2 gap-x-10 gap-y-10">
-            {VALUES.map((v) => (
-              <div key={v.title} className="border-t-2 border-signal pt-5">
-                <h3 className="font-display text-xl mb-2">{v.title}</h3>
-                <p className="text-sm text-ink/65 leading-relaxed">{v.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Achievements */}
-      <section className="section-rule">
-        <div className="container-page py-16">
-          <div className="eyebrow mb-3">Track record</div>
-          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
-            Achievements
-          </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {ACHIEVEMENTS.map((a) => (
-              <div key={a.label}>
-                <div className="font-display text-4xl md:text-5xl text-signal">
-                  {a.number}
-                </div>
-                <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 mt-2">
-                  {a.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team */}
+      {/* OUR TEAM */}
       <section className="section-rule">
         <div className="container-page py-16">
           <div className="eyebrow mb-3">Who's on it</div>
           <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
-            Team
+            Our team
           </h2>
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-px bg-line">
             {TEAM.map((t) => (
@@ -170,48 +157,48 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* MISSION & VISION */}
       <section className="section-rule">
-        <div className="container-page py-16 grid md:grid-cols-12 gap-10">
-          <div className="md:col-span-4">
-            <div className="eyebrow mb-3">FAQ</div>
-            <h2 className="font-display text-3xl md:text-4xl leading-tight">
-              Questions?
-              <br />
-              We are here to help
-            </h2>
-          </div>
-          <div className="md:col-span-8 divide-y divide-line border-t border-line">
-            {FAQS.map((f, i) => (
-              <details key={f.q} className="group py-5">
-                <summary className="flex items-center justify-between gap-6 cursor-pointer list-none">
-                  <span className="flex items-baseline gap-4">
-                    <span className="font-mono text-xs text-ink/35">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="font-display text-lg md:text-xl">{f.q}</span>
-                  </span>
-                  <span className="shrink-0 w-7 h-7 rounded-full border border-ink/20 flex items-center justify-center text-ink/60 transition-transform group-open:rotate-45">
-                    +
-                  </span>
-                </summary>
-                <p className="mt-3 pl-9 text-sm text-ink/60 leading-relaxed max-w-xl">
-                  {f.a}
-                </p>
-              </details>
+        <div className="container-page py-16">
+          <div className="eyebrow mb-3">What drives us</div>
+          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
+            Mission &amp; Vision
+          </h2>
+          <div className="grid md:grid-cols-2 gap-10">
+            {MISSION_VISION.map((m) => (
+              <div key={m.title} className="border-t-2 border-signal pt-6">
+                <h3 className="font-display text-2xl mb-3">{m.title}</h3>
+                <p className="text-ink/65 leading-relaxed">{m.body}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section-rule">
-        <div className="container-page py-20 text-center">
-          <h2 className="font-display text-3xl md:text-4xl max-w-lg mx-auto">
-            Want to work with the team?
+      {/* EXPERTISE */}
+      <section className="section-rule bg-paperdim">
+        <div className="container-page py-16">
+          <div className="eyebrow mb-3">What we're good at</div>
+          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
+            Our expertise
           </h2>
-          <Link href="/contact" className="btn-primary mt-8 inline-flex">
-            Get in touch
-          </Link>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {SERVICES.map((s) => (
+              <div key={s.slug} className="bg-paper border border-line p-7">
+                <div className="font-mono text-[11px] tracking-[0.14em] text-signal mb-3">
+                  {s.tag}
+                </div>
+                <h3 className="font-display text-xl mb-2">{s.name}</h3>
+                <p className="text-sm text-ink/60 leading-relaxed">{s.summary}</p>
+                <Link
+                  href={`/services/${s.slug}`}
+                  className="inline-block mt-4 font-mono text-[11px] uppercase tracking-[0.08em] text-ink/60 hover:text-signal transition-colors"
+                >
+                  Learn more →
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     </>

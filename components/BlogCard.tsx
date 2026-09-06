@@ -26,7 +26,7 @@ export default function BlogCard({ href, children }: Props) {
       onMouseMove={handleMouseMove}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="group relative grid md:grid-cols-2 gap-8 md:gap-10 items-center rounded-2xl border border-line p-6 md:p-8 hover:border-ink/20 transition-colors"
+      className="group relative flex flex-col gap-5 h-full rounded-2xl border border-line p-5 hover:border-ink/20 transition-colors"
     >
       {children}
 

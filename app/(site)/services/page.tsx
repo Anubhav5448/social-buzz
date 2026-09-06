@@ -8,32 +8,152 @@ export const metadata: Metadata = {
     "Digital Marketing, Graphic Designing, Web Development, Performance Marketing and Event Management — all covered in full on one page.",
 };
 
+const WHY_CHOOSE_US = [
+  {
+    title: "One desk, five disciplines",
+    body: "Strategy, design, build, paid media and events sit in the same room — no hand-off gaps, no repeated briefings.",
+  },
+  {
+    title: "Reporting you can read",
+    body: "Every engagement ends the month with numbers that map back to leads and revenue, not just impressions.",
+  },
+  {
+    title: "Built for momentum",
+    body: "We plan in campaigns, not one-off tasks, so this month's work compounds into next month's results.",
+  },
+];
+
+const PROCESS = [
+  {
+    step: "01",
+    title: "Discover",
+    body: "We audit what's working, what isn't, and where the brief actually needs to focus.",
+  },
+  {
+    step: "02",
+    title: "Strategize",
+    body: "A plan across design, media and build — one brief, not five disconnected ones.",
+  },
+  {
+    step: "03",
+    title: "Create",
+    body: "Design, content and campaigns come together in parallel, checked in on weekly.",
+  },
+  {
+    step: "04",
+    title: "Launch & Grow",
+    body: "We ship, measure, and keep iterating against the numbers that actually matter.",
+  },
+];
+
+const PRICING = [
+  {
+    name: "Starter",
+    price: "₹25,000",
+    period: "/month",
+    description: "One channel, done properly — good for testing a single service before scaling up.",
+    features: [
+      "One service of your choice",
+      "Monthly strategy call",
+      "Standard monthly report",
+      "Email support",
+    ],
+    highlighted: false,
+  },
+  {
+    name: "Growth",
+    price: "₹60,000",
+    period: "/month",
+    description: "The most common setup — two or three services running together on one calendar.",
+    features: [
+      "Up to 3 services combined",
+      "Bi-weekly strategy calls",
+      "Detailed performance reporting",
+      "Priority email & chat support",
+      "Quarterly strategy review",
+    ],
+    highlighted: true,
+  },
+  {
+    name: "Scale",
+    price: "Custom",
+    period: "",
+    description: "Full-stack coverage across all five disciplines with a dedicated team.",
+    features: [
+      "All five services",
+      "Dedicated account lead",
+      "Weekly strategy calls",
+      "Custom reporting dashboard",
+      "On-call support",
+    ],
+    highlighted: false,
+  },
+];
+
 export default function ServicesPage() {
   return (
     <>
-      <section className="container-page pt-32 md:pt-40 pb-14">
-        <div className="eyebrow mb-4">Services</div>
-        <h1 className="font-display text-4xl md:text-6xl max-w-2xl leading-[1.05]">
-          Everything we do, in one place.
-        </h1>
-        <p className="mt-6 text-ink/60 max-w-xl text-lg leading-relaxed">
-          Five services, each covered in full detail below. Jump straight to
-          the one you need, or read top to bottom to see how they connect.
-        </p>
-
-        <div className="mt-8 flex flex-wrap gap-2">
-          {SERVICES.map((s) => (
-            <Link
-              key={s.slug}
-              href={`/services/${s.slug}`}
-              className="font-mono text-[11px] uppercase tracking-[0.1em] border border-line px-4 py-2 hover:border-signal hover:text-signal transition-colors"
-            >
-              {s.name}
+      {/* SERVICES HERO */}
+      <section className="hero-band py-24 md:py-28 text-center">
+        <div className="relative z-10 container-page">
+          <h1 className="font-display font-bold text-4xl md:text-6xl leading-[1.15] text-ink max-w-3xl mx-auto">
+            Our <span className="text-signal">Services</span>
+          </h1>
+          <div className="mt-6 flex items-center justify-center gap-2 font-mono text-sm text-ink/50">
+            <Link href="/" className="hover:text-signal transition-colors">
+              Home
             </Link>
-          ))}
+            <span aria-hidden="true">›</span>
+            <span className="text-ink font-medium">Services</span>
+          </div>
         </div>
       </section>
 
+      {/* WHY CHOOSE OUR SERVICES */}
+      <section className="section-rule">
+        <div className="container-page py-16">
+          <div className="eyebrow mb-3">Why choose our services</div>
+          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
+            Fewer vendors. Faster decisions. Clearer numbers.
+          </h2>
+          <div className="grid md:grid-cols-3 gap-10">
+            {WHY_CHOOSE_US.map((w, i) => (
+              <div key={w.title} className="border-t-2 border-signal pt-6">
+                <div className="font-mono text-[11px] text-ink/40 mb-3">
+                  0{i + 1}
+                </div>
+                <h3 className="font-display text-xl mb-3">{w.title}</h3>
+                <p className="text-ink/60 text-sm leading-relaxed">{w.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS OF WORK */}
+      <section className="section-rule bg-paper text-ink">
+        <div className="container-page py-16">
+          <div className="eyebrow text-ink/50 mb-3">How we work</div>
+          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
+            Our process
+          </h2>
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {PROCESS.map((p) => (
+              <div key={p.step}>
+                <div className="font-display text-3xl text-signal mb-3">
+                  {p.step}
+                </div>
+                <h3 className="font-display text-lg mb-2">{p.title}</h3>
+                <p className="text-ink/60 text-sm leading-relaxed">
+                  {p.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SERVICES WE OFFER */}
       {SERVICES.map((s, i) => (
         <section
           id={s.slug}
@@ -44,7 +164,7 @@ export default function ServicesPage() {
           <div className="absolute inset-0">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={s.heroImage} alt="" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-ink/75" />
+            <div className="absolute inset-0 bg-paper/80" />
           </div>
 
           <div className="relative z-10 container-page py-16 grid md:grid-cols-12 gap-10">
@@ -52,18 +172,18 @@ export default function ServicesPage() {
               <div className="font-mono text-[11px] tracking-[0.18em] text-signal mb-4">
                 {s.tag}
               </div>
-              <h2 className="font-display text-3xl md:text-4xl leading-tight text-paper">
+              <h2 className="font-display text-3xl md:text-4xl leading-tight text-ink">
                 {s.name}
               </h2>
             </div>
 
             <div className="md:col-span-8">
-              <p className="text-lg text-paper/80 leading-relaxed max-w-2xl mb-8">
+              <p className="text-lg text-ink/80 leading-relaxed max-w-2xl mb-8">
                 {s.summary}
               </p>
               <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
                 {s.points.map((p) => (
-                  <li key={p} className="flex gap-3 text-sm text-paper/75">
+                  <li key={p} className="flex gap-3 text-sm text-ink/75">
                     <span className="text-signal mt-1">—</span>
                     <span>{p}</span>
                   </li>
@@ -72,13 +192,13 @@ export default function ServicesPage() {
               <div className="mt-9 flex flex-wrap items-center gap-4">
                 <Link
                   href="/contact"
-                  className="btn-outline inline-flex !border-paper/60 !text-paper hover:!border-signal hover:!text-signal"
+                  className="btn-outline inline-flex !border-ink/60 !text-ink hover:!border-signal hover:!text-signal"
                 >
                   Ask about {s.name}
                 </Link>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="font-mono text-[12px] uppercase tracking-[0.08em] text-paper/70 hover:text-signal transition-colors"
+                  className="font-mono text-[12px] uppercase tracking-[0.08em] text-ink/70 hover:text-signal transition-colors"
                 >
                   View full details →
                 </Link>
@@ -88,16 +208,87 @@ export default function ServicesPage() {
         </section>
       ))}
 
-      <section className="section-rule bg-ink text-paper">
+      {/* PRICING */}
+      <section className="section-rule">
+        <div className="container-page py-20">
+          <div className="eyebrow mb-3">Pricing</div>
+          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-4">
+            Simple plans, built around how much you need covered.
+          </h2>
+          <p className="text-ink/60 max-w-xl mb-12">
+            Rough starting points — most engagements get scoped to the exact
+            mix of services after a quick call.
+          </p>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {PRICING.map((tier) => (
+              <div
+                key={tier.name}
+                className={`flex flex-col p-8 border ${
+                  tier.highlighted
+                    ? "border-signal bg-paperdim text-ink"
+                    : "border-line bg-paper text-ink"
+                }`}
+              >
+                {tier.highlighted && (
+                  <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-signal mb-3">
+                    Most popular
+                  </div>
+                )}
+                <h3 className="font-display text-2xl mb-1">{tier.name}</h3>
+                <div className="mb-4">
+                  <span className="font-display text-3xl">{tier.price}</span>
+                  <span
+                    className={`text-sm ml-1 ${
+                      tier.highlighted ? "text-ink/60" : "text-ink/50"
+                    }`}
+                  >
+                    {tier.period}
+                  </span>
+                </div>
+                <p
+                  className={`text-sm leading-relaxed mb-6 ${
+                    tier.highlighted ? "text-ink/70" : "text-ink/60"
+                  }`}
+                >
+                  {tier.description}
+                </p>
+                <ul className="space-y-3 mb-8 flex-1">
+                  {tier.features.map((f) => (
+                    <li key={f} className="flex gap-3 text-sm">
+                      <span className="text-signal mt-0.5">—</span>
+                      <span className={tier.highlighted ? "text-ink/80" : "text-ink/70"}>
+                        {f}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/contact"
+                  className={
+                    tier.highlighted
+                      ? "btn-primary bg-signal hover:bg-paper hover:text-ink justify-center"
+                      : "btn-outline justify-center"
+                  }
+                >
+                  Get a Quote
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="section-rule bg-paper text-ink">
         <div className="container-page py-20 text-center">
           <h2 className="font-display text-3xl md:text-4xl max-w-xl mx-auto">
             Not sure which service you need?
           </h2>
-          <p className="mt-4 text-paper/60 max-w-md mx-auto">
+          <p className="mt-4 text-ink/60 max-w-md mx-auto">
             Most projects use two or three of these together. Tell us the
             goal and we'll map out the mix.
           </p>
-          <Link href="/contact" className="btn-primary mt-8 inline-flex bg-signal hover:bg-paper hover:text-ink">
+          <Link href="/contact" className="btn-primary mt-8 inline-flex bg-ink hover:bg-signal hover:text-paper">
             Get a Quote
           </Link>
         </div>

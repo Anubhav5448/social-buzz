@@ -23,19 +23,21 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
   return (
     <>
       {/* Hero */}
-      <section className="container-page pt-16 pb-10">
-        <span className="inline-flex items-center gap-2 rounded-full bg-paperdim px-4 py-1.5 mb-6 font-mono text-[11px] uppercase tracking-[0.1em] text-ink/70">
-          <span className="w-1.5 h-1.5 rounded-full bg-signal" />
-          Service Detail
-        </span>
+      <section className="relative w-full overflow-hidden bg-paper text-ink py-24 md:py-28 text-center">
+        <h1 className="font-display font-bold text-4xl md:text-6xl leading-[1.15] max-w-4xl mx-auto px-6">
+          {service.name} <span className="text-signal">Company</span> In Dehradun
+        </h1>
 
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-          <h1 className="font-display text-4xl md:text-6xl leading-[1.05] max-w-2xl">
-            {service.name}
-          </h1>
-          <p className="text-ink/60 text-base md:text-lg leading-relaxed max-w-xs md:pt-3 md:text-right">
-            {service.summary}
-          </p>
+        <div className="mt-6 flex items-center justify-center gap-2 font-mono text-sm text-ink/50">
+          <Link href="/" className="hover:text-signal transition-colors">
+            Home
+          </Link>
+          <span aria-hidden="true">›</span>
+          <Link href="/services" className="hover:text-signal transition-colors">
+            Services
+          </Link>
+          <span aria-hidden="true">›</span>
+          <span className="text-ink font-medium">{service.name}</span>
         </div>
       </section>
 

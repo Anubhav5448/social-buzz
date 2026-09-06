@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Lora, Open_Sans } from "next/font/google";
+import { Lora, Open_Sans } from "next/font/google";
 import "./globals.css";
 
 // Titles — Lora, used everywhere via the `font-display` class.
@@ -17,7 +17,7 @@ const body = Open_Sans({
   weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const mono = JetBrains_Mono({
+const mono = Open_Sans({
   subsets: ["latin"],
   variable: "--font-mono",
   weight: ["400", "500"],

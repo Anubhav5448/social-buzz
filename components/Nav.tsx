@@ -117,13 +117,13 @@ export default function Nav() {
   // content through it) even at full scroll — never a solid cream bar.
   const MAX_BG_OPACITY = 0.45;
   const headerStyle = {
-    backgroundColor: `rgba(250, 249, 244, ${scrollProgress * MAX_BG_OPACITY})`,
-    borderBottomColor: `rgba(228, 225, 211, ${scrollProgress * 0.6})`,
+    backgroundColor: `rgba(18, 18, 26, ${scrollProgress * MAX_BG_OPACITY})`,
+    borderBottomColor: `rgba(42, 42, 51, ${scrollProgress * 0.6})`,
     backdropFilter: `blur(${scrollProgress * 10}px)`,
     WebkitBackdropFilter: `blur(${scrollProgress * 10}px)`,
     boxShadow:
       scrollProgress > 0.05
-        ? `0 8px 24px rgba(18, 18, 26, ${0.04 * scrollProgress})`
+        ? `0 8px 24px rgba(250, 249, 244, ${0.05 * scrollProgress})`
         : "none",
   };
 
@@ -221,7 +221,7 @@ export default function Nav() {
       >
         <button
           aria-label="Close menu"
-          className="absolute inset-0 bg-ink/50 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           onClick={() => setOpen(false)}
         />
 

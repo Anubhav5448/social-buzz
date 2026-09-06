@@ -20,10 +20,6 @@ export default function ContactPage() {
       </p>
 
       <div className="grid lg:grid-cols-12 gap-12">
-        <div className="lg:col-span-7">
-          <ContactForm />
-        </div>
-
         <div className="lg:col-span-5 space-y-10">
           <div>
             <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 mb-2">
@@ -62,16 +58,22 @@ export default function ContactPage() {
             </div>
           </div>
 
-          <div className="border border-line h-56 overflow-hidden">
-            <iframe
-              title="Social Buzz location map"
-              className="w-full h-full grayscale contrast-125"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src="https://www.openstreetmap.org/export/embed.html?bbox=77.98%2C30.28%2C78.08%2C30.36&layer=mapnik&marker=30.322%2C78.032"
-            />
-          </div>
         </div>
+
+        <div className="lg:col-span-7">
+          <ContactForm />
+        </div>
+      </div>
+
+      {/* MAP */}
+      <div className="mt-16 border border-line h-[420px] overflow-hidden">
+        <iframe
+          title="Social Buzz location map"
+          className="w-full h-full grayscale contrast-125"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          src="https://www.openstreetmap.org/export/embed.html?bbox=77.98%2C30.28%2C78.08%2C30.36&layer=mapnik&marker=30.322%2C78.032"
+        />
       </div>
     </section>
   );

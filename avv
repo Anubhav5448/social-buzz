@@ -1,0 +1,8 @@
+use the dark mode as default in this site, colors should be used as dark mode
+
+1. Change the layout of full project like HeroSection of home page should be like left side some text regarding this Digital Marketing and on the right side i will add a 3d avatar of a character and some small elements around in the hero section that would interact with the mouse hover
+2. Home : There will be Hero section, Below Hero section There will be About us section , Below about There will be a smalller section of Our Process of work, then Services we offer, Then Projects and testimonials, Then FAQs section
+3. About: About Us Hero section then Detailed about us then Our team, then Mission Vision, Expertise in section.
+4. Services: Services Hero Section, then Why Choose Our Services section,  process of work, services we offer, pricing 
+5. Blog: Blog Hero section then 3xn blog tiles
+6. Contact: Contact Us hero section, then on the left side there will be information and in the right side  contact us form and below them there will be map

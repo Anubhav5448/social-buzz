@@ -8,19 +8,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        ink: "#12121A",
-        paper: "#FAF9F4",
-        paperdim: "#F1EFE6",
+        ink: "#FAF9F4",
+        paper: "#12121A",
+        paperdim: "#1B1B24",
         signal: "#FF4E1F",
-        signaldim: "#FFE3D6",
-        volt: "#2A3EFF",
+        signaldim: "#3D2318",
+        volt: "#4C5FFF",
         lime: "#D7FF4A",
-        line: "#E4E1D3",
+        line: "#2A2A33",
       },
       fontFamily: {
         display: ["var(--font-display)", "serif"],
         body: ["var(--font-body)", "sans-serif"],
-        mono: ["var(--font-mono)", "monospace"],
+        mono: ["var(--font-mono)", "sans-serif"],
         hero: ["var(--font-hero)", "serif"],
         nav: ["var(--font-nav)", "sans-serif"],
       },
