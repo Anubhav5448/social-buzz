@@ -60,7 +60,7 @@ export default function HeroExperience() {
       <img
         src="/grid.jpg"
         alt=""
-        className="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none select-none"
+        className="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none select-none"
       />
 
       <div className="container-page relative z-10 flex flex-col md:flex-row items-center gap-8 sm:gap-10 md:gap-12 py-6 sm:py-10 md:py-0 md:min-h-[640px]">
