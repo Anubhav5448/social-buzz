@@ -91,7 +91,7 @@ export default function AboutPage() {
           <div className="grid md:grid-cols-2 gap-14 items-center">
             <div className="relative w-full h-[300px] md:h-[420px]">
               <Image
-                src="/about/illustration.png"
+                src="/about/team.png"
                 alt="Illustration of the Social Buzz team at work"
                 fill
                 className="object-contain"
