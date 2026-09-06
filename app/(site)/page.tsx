@@ -239,10 +239,10 @@ export default async function HomePage() {
                 <div
                   key={item.id}
                   className={`border border-line overflow-hidden flex flex-col justify-between hover:border-signal transition-colors ${
-                    i === 0 ? "md:row-span-2 h-72 md:h-full" : "h-56"
+                    i === 0 ? "md:row-span-2" : ""
                   }`}
                 >
-                  <div className={`bg-paper overflow-hidden ${i === 0 ? "h-40 md:h-2/3" : "h-24"}`}>
+                  <div className={`bg-paper overflow-hidden shrink-0 ${i === 0 ? "h-48 md:h-72" : "h-32"}`}>
                     {item.media_url ? (
                       item.media_type === "video" ? (
                         <video src={item.media_url} className="w-full h-full object-cover" muted />
