@@ -46,6 +46,18 @@ const PROCESS = [
   },
 ];
 
+// Varies each masonry card's height so the grid reads like a Pinterest wall
+// rather than a uniform tile grid. Cycled by index — tune per-service if
+// SERVICES changes. Paired 1:1 with the render order.
+const MASONRY_HEIGHTS = [
+  "h-[420px]", // 0 — tall
+  "h-[300px]", // 1 — short
+  "h-[380px]", // 2 — medium-tall
+  "h-[260px]", // 3 — short
+  "h-[460px]", // 4 — tall
+];
+const DEFAULT_MASONRY_HEIGHT = "h-[340px]";
+
 const PRICING = [
   {
     name: "Starter",
@@ -153,65 +165,85 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* SERVICES WE OFFER */}
-      {SERVICES.map((s, i) => (
-        <section
-          id={s.slug}
-          key={s.slug}
-          className={`section-rule scroll-mt-20 ${i % 2 === 1 ? "bg-paperdim" : ""}`}
-        >
-          <div
-            className={`flex flex-col md:flex-row ${
-              i % 2 === 1 ? "md:flex-row-reverse" : ""
-            }`}
-          >
-            <div className="w-full md:w-1/3 h-56 md:h-[420px] shrink-0">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={s.heroImage}
-                alt={s.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
+      {/* SERVICES WE OFFER — Pinterest-style masonry */}
+      <section className="section-rule">
+        <div className="container-page py-16 md:py-20">
+          <div className="eyebrow mb-3">What we offer</div>
+          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
+            Five disciplines, pinned to one board.
+          </h2>
 
-            <div className="flex-1 flex items-center">
-              <div className="container-page py-12 md:py-16">
-                <div className="font-mono text-[11px] tracking-[0.18em] text-signal mb-4">
-                  {s.tag}
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-5 [column-fill:_balance]">
+            {SERVICES.map((s, i) => (
+              <Link
+                id={s.slug}
+                key={s.slug}
+                href={`/services/${s.slug}`}
+                className={`scroll-mt-20 group relative block w-full overflow-hidden rounded-2xl ring-1 ring-ink/10 mb-4 md:mb-5 break-inside-avoid ${
+                  MASONRY_HEIGHTS[i] ?? DEFAULT_MASONRY_HEIGHT
+                }`}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={s.heroImage}
+                  alt={s.name}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                />
+
+                {/* base tint — darkens the whole card evenly so text stays legible on any photo */}
+                <div className="absolute inset-0 bg-black/35" />
+
+                {/* stronger fade near the label for extra contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
+
+                {/* subtle darkening on hover so the reveal text stays readable over a scaled-up image */}
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
+
+                {/* pin number, top right — like a corkboard pin */}
+                <div className="absolute top-4 right-4 w-7 h-7 rounded-full bg-signal/90 flex items-center justify-center font-mono text-[10px] text-ink font-bold">
+                  {String(i + 1).padStart(2, "0")}
                 </div>
-                <h2 className="font-display text-3xl md:text-4xl leading-tight text-ink mb-5">
-                  {s.name}
-                </h2>
-                <p className="text-lg text-ink/70 leading-relaxed max-w-2xl mb-8">
-                  {s.summary}
-                </p>
-                <ul className="grid sm:grid-cols-2 gap-x-8 gap-y-3">
-                  {s.points.map((p) => (
-                    <li key={p} className="flex gap-3 text-sm text-ink/65">
-                      <span className="text-signal mt-1">—</span>
-                      <span>{p}</span>
-                    </li>
-                  ))}
-                </ul>
-                <div className="mt-9 flex flex-wrap items-center gap-4">
-                  <Link
-                    href="/contact"
-                    className="btn-outline inline-flex !border-ink/60 !text-ink hover:!border-signal hover:!text-signal"
-                  >
-                    Ask about {s.name}
-                  </Link>
-                  <Link
-                    href={`/services/${s.slug}`}
-                    className="font-mono text-[12px] uppercase tracking-[0.08em] text-ink/70 hover:text-signal transition-colors"
-                  >
-                    View full details →
-                  </Link>
+
+                {/* label — always visible */}
+                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 transition-transform duration-500 ease-out group-hover:-translate-y-1">
+                  <div className="font-mono text-[10px] tracking-[0.18em] uppercase text-signal mb-2">
+                    {s.tag}
+                  </div>
+                  <h3 className="font-display text-2xl md:text-3xl text-white leading-[1.1] text-balance">
+                    {s.name}
+                  </h3>
+
+                  {/* reveal-on-hover detail */}
+                  <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out">
+                    <div className="overflow-hidden">
+                      <p className="text-sm text-white/75 leading-relaxed mt-3">
+                        {s.summary}
+                      </p>
+                      <div className="mt-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] text-white">
+                        View full details
+                        <span className="transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+
+                {/* hairline frame edge that lights up on hover */}
+                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-signal/0 group-hover:ring-signal/60 transition-all duration-300 pointer-events-none" />
+              </Link>
+            ))}
           </div>
-        </section>
-      ))}
+
+          <p className="mt-6 text-sm text-ink/45 font-mono">
+            Tap any card for the full breakdown, or{" "}
+            <Link href="/contact" className="text-signal hover:underline">
+              ask us directly
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
 
       {/* PRICING */}
       <section className="section-rule">

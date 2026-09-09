@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 const EMAIL = "hello@thesocialbuzz.in";
 
@@ -23,6 +23,17 @@ export default function HeroExperience() {
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
   const [copied, setCopied] = useState(false);
   const [hoveredEl, setHoveredEl] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Check if mobile on mount and window resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
     const el = sectionRef.current;
@@ -48,6 +59,16 @@ export default function HeroExperience() {
     }
   }
 
+  // Reduced parallax strength for mobile
+  const getParallaxValues = () => {
+    if (isMobile) {
+      return { rotateY: 4, rotateX: -3, translateX: 4, translateY: 4 };
+    }
+    return { rotateY: 14, rotateX: -10, translateX: 10, translateY: 10 };
+  };
+
+  const parallax = getParallaxValues();
+
   return (
     <section
       ref={sectionRef}
@@ -63,57 +84,63 @@ export default function HeroExperience() {
         className="absolute inset-0 w-full h-full object-cover opacity-5 pointer-events-none select-none"
       />
 
-      <div className="container-page relative z-10 flex flex-col md:flex-row items-center gap-8 sm:gap-10 md:gap-12 py-6 sm:py-10 md:py-0 md:min-h-[640px]">
-        {/* LEFT: copy */}
-        <div className="flex-1 md:max-w-[52%] text-center md:text-left">
-          <div className="eyebrow mb-3 sm:mb-4 justify-center md:justify-start flex">
+      <div className="container-page relative z-10 flex flex-col md:flex-row items-center gap-4 sm:gap-10 md:gap-12 py-4 sm:py-10 md:py-0 md:min-h-[640px]">
+        {/* LEFT: copy - more compact on mobile */}
+        <div className="flex-1 md:max-w-[52%] text-center md:text-left px-4 sm:px-0">
+          <div className="eyebrow mb-2 sm:mb-4 justify-center md:justify-start flex text-xs sm:text-sm">
             Digital Marketing Agency
           </div>
-          <h1 className="font-hero text-3xl sm:text-4xl md:text-[58px] leading-[1.15] md:leading-[1.03] tracking-tight text-ink">
+          <h1 className="font-hero text-2xl sm:text-4xl md:text-[58px] leading-[1.2] md:leading-[1.03] tracking-tight text-ink">
             We build the signal your brand broadcasts.
           </h1>
-          <p className="font-hero mt-4 sm:mt-5 md:mt-6 text-sm sm:text-base md:text-lg text-ink/65 max-w-lg leading-relaxed mx-auto md:mx-0">
+          <p className="font-hero mt-2 sm:mt-5 md:mt-6 text-xs sm:text-base md:text-lg text-ink/65 max-w-lg leading-relaxed mx-auto md:mx-0">
             Digital marketing, design, web development, performance media and
             events — planned together so every piece of work amplifies the
             next.
           </p>
 
-          <div className="mt-6 sm:mt-7 md:mt-8 flex flex-wrap items-center gap-3 sm:gap-4 justify-center md:justify-start">
-            <a href="/contact" className="btn-primary">
+          <div className="mt-4 sm:mt-7 md:mt-8 flex flex-wrap items-center gap-2 sm:gap-4 justify-center md:justify-start">
+            <a href="/contact" className="btn-primary text-xs sm:text-base px-3 py-1.5 sm:px-6 sm:py-2.5">
               Start a project
             </a>
-            <a href="/services" className="btn-outline">
+            <a href="/services" className="btn-outline text-xs sm:text-base px-3 py-1.5 sm:px-6 sm:py-2.5">
               Our services
             </a>
           </div>
 
           <button
             onClick={handleCopyEmail}
-            className="mt-6 sm:mt-7 md:mt-8 font-mono text-[11px] sm:text-xs uppercase tracking-[0.1em] text-ink/60 hover:text-signal transition-colors"
+            className="mt-4 sm:mt-7 md:mt-8 font-mono text-[10px] sm:text-xs uppercase tracking-[0.1em] text-ink/60 hover:text-signal transition-colors"
           >
             {copied ? "Copied!" : EMAIL.toUpperCase()}
           </button>
         </div>
 
-        {/* RIGHT: avatar + interactive floating icons */}
-        <div className="hidden sm:flex flex-1 relative w-full sm:h-[380px] md:h-[560px] items-center justify-center">
-          {/* Soft glow behind the avatar */}
-          <div className="absolute w-[70%] h-[70%] rounded-full bg-signal/10 blur-3xl" />
+        {/* RIGHT: avatar + interactive floating icons - optimized for mobile */}
+        <div className="flex flex-1 relative w-full h-[180px] sm:h-[380px] md:h-[560px] items-center justify-center">
+          {/* Soft glow behind the avatar - smaller on mobile */}
+          <div className={`absolute ${isMobile ? 'w-[50%] h-[50%]' : 'w-[70%] h-[70%]'} rounded-full bg-signal/10 blur-3xl`} />
 
-          {/* Avatar — tilts gently toward the cursor */}
+          {/* Avatar — reduced movement on mobile */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/avatar.png"
             alt="3D character avatar"
-            className="relative z-10 w-[58%] sm:w-[64%] md:w-[70%] max-w-[420px] select-none pointer-events-none will-change-transform transition-transform duration-200 ease-out drop-shadow-2xl"
+            className={`relative z-10 select-none pointer-events-none will-change-transform transition-transform duration-200 ease-out drop-shadow-2xl ${
+              isMobile 
+                ? 'w-[45%] max-w-[160px]' 
+                : 'w-[70%] sm:w-[64%] md:w-[70%] max-w-[420px]'
+            }`}
             style={{
-              transform: `rotateY(${pointer.x * 14}deg) rotateX(${
-                pointer.y * -10
-              }deg) translate3d(${pointer.x * 10}px, ${pointer.y * 10}px, 0)`,
+              transform: `rotateY(${pointer.x * parallax.rotateY}deg) rotateX(${
+                pointer.y * parallax.rotateX
+              }deg) translate3d(${pointer.x * parallax.translateX}px, ${
+                pointer.y * parallax.translateY
+              }px, 0)`,
             }}
           />
 
-          {/* Floating icons */}
+          {/* Floating icons - hidden on mobile for cleaner look */}
           {FLOATING_ELEMENTS.map((item) => {
             const isHovered = hoveredEl === item.id;
             return (
@@ -146,6 +173,28 @@ export default function HeroExperience() {
             );
           })}
         </div>
+      </div>
+
+      {/* Mobile-only: compact icon strip under the avatar */}
+      <div className="flex sm:hidden container-page relative z-10 justify-center gap-2 pb-4 -mt-1 flex-wrap px-4">
+        {FLOATING_ELEMENTS.map((item) => (
+          <div
+            key={item.id}
+            className="flex items-center gap-1 rounded-full border border-line bg-paperdim/90 shadow-sm pl-1 pr-2 py-0.5"
+          >
+            <span className="w-4 h-4 shrink-0 flex items-center justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={item.src}
+                alt=""
+                className="w-full h-full object-contain pointer-events-none select-none"
+              />
+            </span>
+            <span className="font-mono text-[8px] uppercase tracking-[0.06em] text-ink/70 whitespace-nowrap">
+              {item.label}
+            </span>
+          </div>
+        ))}
       </div>
 
       <style jsx>{`
