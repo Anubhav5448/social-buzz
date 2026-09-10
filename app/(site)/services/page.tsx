@@ -121,49 +121,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* WHY CHOOSE OUR SERVICES */}
-      <section className="section-rule">
-        <div className="container-page py-16">
-          <div className="eyebrow mb-3">Why choose our services</div>
-          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
-            Fewer vendors. Faster decisions. Clearer numbers.
-          </h2>
-          <div className="grid md:grid-cols-3 gap-10">
-            {WHY_CHOOSE_US.map((w, i) => (
-              <div key={w.title} className="border-t-2 border-signal pt-6">
-                <div className="font-mono text-[11px] text-ink/40 mb-3">
-                  0{i + 1}
-                </div>
-                <h3 className="font-display text-xl mb-3">{w.title}</h3>
-                <p className="text-ink/60 text-sm leading-relaxed">{w.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PROCESS OF WORK */}
-      <section className="section-rule bg-paper text-ink">
-        <div className="container-page py-16">
-          <div className="eyebrow text-ink/50 mb-3">How we work</div>
-          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
-            Our process
-          </h2>
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-            {PROCESS.map((p) => (
-              <div key={p.step}>
-                <div className="font-display text-3xl text-signal mb-3">
-                  {p.step}
-                </div>
-                <h3 className="font-display text-lg mb-2">{p.title}</h3>
-                <p className="text-ink/60 text-sm leading-relaxed">
-                  {p.body}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+     
 
       {/* SERVICES WE OFFER — Pinterest-style masonry */}
       <section className="section-rule">

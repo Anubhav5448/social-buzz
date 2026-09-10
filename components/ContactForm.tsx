@@ -12,14 +12,36 @@ const SERVICE_OPTIONS = [
 ];
 
 export default function ContactForm() {
-  const [status, setStatus] = useState<"idle" | "sent">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">(
+    "idle"
+  );
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    // Wire this up to your form backend of choice (e.g. an API route,
-    // Formspree, or a Google Sheets webhook) — this demo just confirms
-    // the enquiry was captured client-side.
-    setStatus("sent");
+    setStatus("sending");
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      service: (form.elements.namedItem("service") as HTMLSelectElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement)
+        .value,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Send failed");
+      setStatus("sent");
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+    }
   }
 
   if (status === "sent") {
@@ -28,7 +50,9 @@ export default function ContactForm() {
         <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-signal mb-3">
           Enquiry received
         </div>
-        <p className="font-display text-2xl mb-2">Thanks — we'll reply within one business day.</p>
+        <p className="font-display text-2xl mb-2">
+          Thanks — we&apos;ll reply within one business day.
+        </p>
         <p className="text-ink/60 text-sm">
           Keep an eye on your inbox for a note from our team.
         </p>
@@ -40,7 +64,10 @@ export default function ContactForm() {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid sm:grid-cols-2 gap-6">
         <div>
-          <label htmlFor="name" className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2">
+          <label
+            htmlFor="name"
+            className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2"
+          >
             Name
           </label>
           <input
@@ -53,7 +80,10 @@ export default function ContactForm() {
           />
         </div>
         <div>
-          <label htmlFor="email" className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2">
+          <label
+            htmlFor="email"
+            className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2"
+          >
             Email
           </label>
           <input
@@ -68,13 +98,16 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="service" className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2">
-          Service you're enquiring about
+        <label
+          htmlFor="service"
+          className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2"
+        >
+          Service you&apos;re enquiring about
         </label>
         <select
           id="service"
           name="service"
-          className="w-full border border-line bg-transparent px-4 py-3 text-ink focus:border-signal outline-none transition-colors"
+          className="w-full border border-line bg-paper px-4 py-3 text-ink focus:border-signal outline-none transition-colors"
           defaultValue={SERVICE_OPTIONS[0]}
         >
           {SERVICE_OPTIONS.map((s) => (
@@ -86,7 +119,10 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="message" className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2">
+        <label
+          htmlFor="message"
+          className="font-mono text-[11px] uppercase tracking-[0.1em] text-ink/50 block mb-2"
+        >
           Message
         </label>
         <textarea
@@ -99,9 +135,26 @@ export default function ContactForm() {
         />
       </div>
 
-      <button type="submit" className="btn-primary w-full sm:w-auto">
-        Send Enquiry
+      <button
+        type="submit"
+        disabled={status === "sending"}
+        className="btn-primary w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
+      >
+        {status === "sending" ? "Sending…" : "Send Enquiry"}
       </button>
+
+      {status === "error" && (
+        <p className="text-red-600 text-sm">
+          Something went wrong. Please email us directly at{" "}
+          <a
+            href="mailto:hello@thesocialbuzz.in"
+            className="underline hover:text-signal"
+          >
+            hello@thesocialbuzz.in
+          </a>
+          .
+        </p>
+      )}
     </form>
   );
 }
