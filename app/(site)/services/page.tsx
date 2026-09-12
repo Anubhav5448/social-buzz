@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { SERVICES } from "@/lib/services";
+import { ServicesExplorer } from "@/components/services/services-explorer";
+
 
 export const metadata: Metadata = {
   title: "Services — The Social Buzz",
@@ -8,7 +10,23 @@ export const metadata: Metadata = {
     "Digital Marketing, Graphic Designing, Web Development, Performance Marketing and Event Management — all covered in full on one page.",
 };
 
-const WHY_CHOOSE_US = [
+const TRUST_MARKERS = [
+  "In-house team",
+  "Real reporting",
+  "Fixed monthly rate",
+  "No lock-in contracts",
+];
+
+const CAPABILITIES = [
+  "Strategy",
+  "Content",
+  "Paid Media",
+  "SEO",
+  "Web Build",
+  "Events",
+];
+
+const PRINCIPLES = [
   {
     title: "One desk, five disciplines",
     body: "Strategy, design, build, paid media and events sit in the same room — no hand-off gaps, no repeated briefings.",
@@ -46,66 +64,79 @@ const PROCESS = [
   },
 ];
 
-// Varies each masonry card's height so the grid reads like a Pinterest wall
-// rather than a uniform tile grid. Cycled by index — tune per-service if
-// SERVICES changes. Paired 1:1 with the render order.
-const MASONRY_HEIGHTS = [
-  "h-[420px]", // 0 — tall
-  "h-[300px]", // 1 — short
-  "h-[380px]", // 2 — medium-tall
-  "h-[260px]", // 3 — short
-  "h-[460px]", // 4 — tall
+const PRICING_TIERS = [
+  { name: "Starter", price: "₹25,000", period: "/month", highlighted: false },
+  { name: "Growth", price: "₹60,000", period: "/month", highlighted: true },
+  { name: "Scale", price: "Custom", period: "", highlighted: false },
 ];
-const DEFAULT_MASONRY_HEIGHT = "h-[340px]";
 
-const PRICING = [
+const PRICING_ROWS = [
   {
-    name: "Starter",
-    price: "₹25,000",
-    period: "/month",
-    description: "One channel, done properly — good for testing a single service before scaling up.",
-    features: [
-      "One service of your choice",
-      "Monthly strategy call",
-      "Standard monthly report",
-      "Email support",
+    label: "Best for",
+    values: [
+      "Testing a single channel before scaling up",
+      "Two or three services running on one calendar",
+      "Full-stack coverage with a dedicated team",
     ],
-    highlighted: false,
   },
   {
-    name: "Growth",
-    price: "₹60,000",
-    period: "/month",
-    description: "The most common setup — two or three services running together on one calendar.",
-    features: [
-      "Up to 3 services combined",
-      "Bi-weekly strategy calls",
-      "Detailed performance reporting",
-      "Priority email & chat support",
-      "Quarterly strategy review",
-    ],
-    highlighted: true,
+    label: "Services included",
+    values: ["1, your choice", "Up to 3, combined", "All 5 disciplines"],
   },
   {
-    name: "Scale",
-    price: "Custom",
-    period: "",
-    description: "Full-stack coverage across all five disciplines with a dedicated team.",
-    features: [
-      "All five services",
-      "Dedicated account lead",
-      "Weekly strategy calls",
-      "Custom reporting dashboard",
-      "On-call support",
-    ],
-    highlighted: false,
+    label: "Strategy calls",
+    values: ["Monthly", "Bi-weekly", "Weekly"],
+  },
+  {
+    label: "Reporting",
+    values: ["Standard monthly report", "Detailed performance report", "Custom dashboard"],
+  },
+  {
+    label: "Support",
+    values: ["Email", "Priority email & chat", "On-call, dedicated lead"],
+  },
+  {
+    label: "Extra",
+    values: ["—", "Quarterly strategy review", "Dedicated account lead"],
   },
 ];
+
+function RotatingSeal({ label }: { label: string }) {
+  const pathId = "seal-ring-path";
+  const repeated = `${label} · `.repeat(4);
+
+  return (
+    <div className="relative h-28 w-28 shrink-0 md:h-32 md:w-32">
+      <svg
+        viewBox="0 0 120 120"
+        className="absolute inset-0 h-full w-full animate-[spin_16s_linear_infinite] motion-reduce:animate-none"
+      >
+        <defs>
+          <path id={pathId} d="M 60,60 m -50,0 a 50,50 0 1,1 100,0 a 50,50 0 1,1 -100,0" />
+        </defs>
+        <text className="fill-paper/70 font-mono text-[8px] uppercase" style={{ letterSpacing: "0.15em" }}>
+          <textPath href={`#${pathId}`} xlinkHref={`#${pathId}`}>
+            {repeated}
+          </textPath>
+        </text>
+      </svg>
+      <div className="absolute inset-0 flex items-center justify-center">
+        <svg viewBox="0 0 24 24" className="h-7 w-7 text-signal" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M12 2.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.9-6.2 3.9 1.6-7-5.4-4.7 7.1-.6z"
+          />
+        </svg>
+      </div>
+    </div>
+  );
+}
 
 export default function ServicesPage() {
   return (
     <>
-      {/* SERVICES HERO */}
+      {/* SERVICES HERO BAND */}
       <section className="hero-band py-24 md:py-28 text-center">
         <div className="relative z-10 container-page">
           <h1 className="font-display font-bold text-4xl md:text-6xl leading-[1.15] text-ink max-w-3xl mx-auto">
@@ -121,170 +152,197 @@ export default function ServicesPage() {
         </div>
       </section>
 
-     
-
-      {/* SERVICES WE OFFER — Pinterest-style masonry */}
-      <section className="section-rule">
-        <div className="container-page py-16 md:py-20">
-          <div className="eyebrow mb-3">What we offer</div>
-          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
-            Five disciplines, pinned to one board.
-          </h2>
-
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-4 md:gap-5 [column-fill:_balance]">
-            {SERVICES.map((s, i) => (
-              <Link
-                id={s.slug}
-                key={s.slug}
-                href={`/services/${s.slug}`}
-                className={`scroll-mt-20 group relative block w-full overflow-hidden rounded-2xl ring-1 ring-ink/10 mb-4 md:mb-5 break-inside-avoid ${
-                  MASONRY_HEIGHTS[i] ?? DEFAULT_MASONRY_HEIGHT
-                }`}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={s.heroImage}
-                  alt={s.name}
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-                />
-
-                {/* base tint — darkens the whole card evenly so text stays legible on any photo */}
-                <div className="absolute inset-0 bg-black/35" />
-
-                {/* stronger fade near the label for extra contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-black/10" />
-
-                {/* subtle darkening on hover so the reveal text stays readable over a scaled-up image */}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-500" />
-
-                {/* pin number, top right — like a corkboard pin */}
-                <div className="absolute top-4 right-4 w-7 h-7 rounded-full bg-signal/90 flex items-center justify-center font-mono text-[10px] text-ink font-bold">
-                  {String(i + 1).padStart(2, "0")}
-                </div>
-
-                {/* label — always visible */}
-                <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 transition-transform duration-500 ease-out group-hover:-translate-y-1">
-                  <div className="font-mono text-[10px] tracking-[0.18em] uppercase text-signal mb-2">
-                    {s.tag}
-                  </div>
-                  <h3 className="font-display text-2xl md:text-3xl text-white leading-[1.1] text-balance">
-                    {s.name}
-                  </h3>
-
-                  {/* reveal-on-hover detail */}
-                  <div className="grid grid-rows-[0fr] group-hover:grid-rows-[1fr] transition-[grid-template-rows] duration-500 ease-out">
-                    <div className="overflow-hidden">
-                      <p className="text-sm text-white/75 leading-relaxed mt-3">
-                        {s.summary}
-                      </p>
-                      <div className="mt-4 inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.08em] text-white">
-                        View full details
-                        <span className="transition-transform group-hover:translate-x-1">
-                          →
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* hairline frame edge that lights up on hover */}
-                <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-signal/0 group-hover:ring-signal/60 transition-all duration-300 pointer-events-none" />
-              </Link>
-            ))}
-          </div>
-
-          <p className="mt-6 text-sm text-ink/45 font-mono">
-            Tap any card for the full breakdown, or{" "}
-            <Link href="/contact" className="text-signal hover:underline">
-              ask us directly
-            </Link>
-            .
-          </p>
+      {/* TRUST STRIP */}
+      <section className="bg-signal">
+        <div className="container-page py-4 flex flex-wrap items-center justify-center gap-x-10 gap-y-2">
+          {TRUST_MARKERS.map((marker) => (
+            <span
+              key={marker}
+              className="inline-flex items-center gap-2 font-mono text-xs md:text-sm font-medium text-ink"
+            >
+              <span aria-hidden="true">✳</span>
+              {marker}
+            </span>
+          ))}
         </div>
       </section>
 
-      {/* PRICING */}
-      <section className="section-rule">
-        <div className="container-page py-20">
-          <div className="eyebrow mb-3">Pricing</div>
-          <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-4">
-            Simple plans, built around how much you need covered.
+      {/* INDEX */}
+      <section className="pt-20 pb-16 md:pt-24 md:pb-20">
+        <div className="container-page">
+          <h2 className="font-display font-bold text-3xl md:text-5xl leading-[1.1] text-ink mb-6">
+            What we do,
+            <br />
+            in five parts.
           </h2>
-          <p className="text-ink/60 max-w-xl mb-12">
-            Rough starting points — most engagements get scoped to the exact
-            mix of services after a quick call.
+          <p className="text-ink/60 max-w-md mb-8">
+            Pick a discipline to jump straight to it, or scroll through all five below. Most
+            engagements end up drawing from more than one.
           </p>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {PRICING.map((tier) => (
-              <div
-                key={tier.name}
-                className={`flex flex-col p-8 border ${
-                  tier.highlighted
-                    ? "border-signal bg-paperdim text-ink"
-                    : "border-line bg-paper text-ink"
-                }`}
+          <div className="flex flex-wrap gap-3 mb-14 md:mb-20">
+            {CAPABILITIES.map((c) => (
+              <span
+                key={c}
+                className="inline-flex items-center rounded-full border-2 border-signal/40 bg-paper px-5 py-2 font-mono text-xs uppercase tracking-wide text-ink"
               >
-                {tier.highlighted && (
-                  <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-signal mb-3">
-                    Most popular
-                  </div>
-                )}
-                <h3 className="font-display text-2xl mb-1">{tier.name}</h3>
-                <div className="mb-4">
-                  <span className="font-display text-3xl">{tier.price}</span>
-                  <span
-                    className={`text-sm ml-1 ${
-                      tier.highlighted ? "text-ink/60" : "text-ink/50"
-                    }`}
-                  >
-                    {tier.period}
-                  </span>
-                </div>
-                <p
-                  className={`text-sm leading-relaxed mb-6 ${
-                    tier.highlighted ? "text-ink/70" : "text-ink/60"
-                  }`}
-                >
-                  {tier.description}
-                </p>
-                <ul className="space-y-3 mb-8 flex-1">
-                  {tier.features.map((f) => (
-                    <li key={f} className="flex gap-3 text-sm">
-                      <span className="text-signal mt-0.5">—</span>
-                      <span className={tier.highlighted ? "text-ink/80" : "text-ink/70"}>
-                        {f}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  href="/contact"
-                  className={
-                    tier.highlighted
-                      ? "btn-primary bg-signal hover:bg-paper hover:text-ink justify-center"
-                      : "btn-outline justify-center"
-                  }
-                >
-                  Get a Quote
-                </Link>
+                {c}
+              </span>
+            ))}
+          </div>
+
+          <div className="relative">
+            <div
+              aria-hidden="true"
+              className="hidden md:block absolute -right-6 -top-10 h-40 w-40 rounded-full border-[16px] border-signal/25"
+            />
+            <ServicesExplorer services={SERVICES} />
+          </div>
+        </div>
+      </section>
+
+      {/* PRINCIPLES */}
+      <section className="section-rule">
+        <div className="container-page py-14 md:py-16">
+          <div className="grid sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-line">
+            {PRINCIPLES.map((p) => (
+              <div key={p.title} className="py-6 sm:py-0 sm:px-8 sm:first:pl-0 sm:last:pr-0">
+                <h3 className="font-display text-lg text-ink mb-2">{p.title}</h3>
+                <p className="text-sm text-ink/60 leading-relaxed">{p.body}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="section-rule bg-paper text-ink">
-        <div className="container-page py-20 text-center">
-          <h2 className="font-display text-3xl md:text-4xl max-w-xl mx-auto">
+      {/* PROCESS */}
+      <section className="section-rule bg-paperdim">
+        <div className="container-page py-20 md:py-24">
+          <div className="flex items-center gap-3 mb-3">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 text-signal" fill="none" stroke="currentColor" strokeWidth="2">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M4 16l6-6-6-6M13 16l6-6-6-6" />
+            </svg>
+            <span className="font-mono text-sm text-signal">Working process</span>
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl max-w-lg mb-16">
+            The same four steps, every time.
+          </h2>
+
+          <div className="grid sm:grid-cols-4 gap-y-12 gap-x-6">
+            {PROCESS.map((p, i) => (
+              <div key={p.step} className="relative flex flex-col items-center text-center">
+                {i > 0 && (
+                  <span
+                    aria-hidden="true"
+                    className="hidden sm:block absolute -left-3 top-10 w-6 border-t-2 border-dashed border-ink/25"
+                  />
+                )}
+                <div className="mb-5 flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-full bg-signal">
+                  <span className="font-mono text-[10px] text-ink/70">Step</span>
+                  <span className="font-display text-lg text-ink">{p.step}</span>
+                </div>
+                <h3 className="font-display text-xl text-ink mb-2">{p.title}</h3>
+                <p className="text-sm text-ink/60 leading-relaxed max-w-[15rem]">{p.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING LEDGER */}
+      <section className="section-rule">
+        <div className="container-page py-20 md:py-24">
+          <h2 className="font-display text-3xl md:text-4xl max-w-lg mb-4">
+            Three ways to work with us.
+          </h2>
+          <p className="text-ink/60 max-w-lg mb-12">
+            Most engagements get scoped to an exact mix of services after a short call — these
+            are starting points.
+          </p>
+
+          <div className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0">
+            <table className="w-full min-w-[640px] border-collapse text-sm">
+              <thead>
+                <tr>
+                  <th className="w-[24%]" scope="col" />
+                  {PRICING_TIERS.map((tier) => (
+                    <th
+                      key={tier.name}
+                      scope="col"
+                      className="text-left align-bottom pb-5 px-6 border-l border-line"
+                    >
+                      <div
+                        className={`font-display text-2xl ${
+                          tier.highlighted ? "text-signal" : "text-ink"
+                        }`}
+                      >
+                        {tier.name}
+                      </div>
+                      <div className="mt-1 font-mono text-xs text-ink/50">
+                        {tier.price}
+                        {tier.period}
+                      </div>
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {PRICING_ROWS.map((row) => (
+                  <tr key={row.label} className="border-t border-line">
+                    <th
+                      scope="row"
+                      className="py-4 pr-4 text-left font-normal text-ink/45 align-top"
+                    >
+                      {row.label}
+                    </th>
+                    {row.values.map((value, i) => (
+                      <td
+                        key={i}
+                        className="py-4 px-6 border-l border-line align-top text-ink/75"
+                      >
+                        {value}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+                <tr className="border-t border-line">
+                  <td />
+                  {PRICING_TIERS.map((tier) => (
+                    <td key={tier.name} className="py-6 px-6 border-l border-line">
+                      <Link
+                        href="/contact"
+                        className={
+                          tier.highlighted
+                            ? "btn-primary bg-signal hover:bg-paper hover:text-ink"
+                            : "btn-outline"
+                        }
+                      >
+                        Get a quote
+                      </Link>
+                    </td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* CLOSING CTA */}
+      <section className="section-rule bg-ink text-paper">
+        <div className="container-page py-20 md:py-24 text-center flex flex-col items-center">
+          <RotatingSeal label="Ask us directly" />
+          <h2 className="font-display text-3xl md:text-4xl max-w-lg mx-auto mt-6">
             Not sure which service you need?
           </h2>
-          <p className="mt-4 text-ink/60 max-w-md mx-auto">
-            Most projects use two or three of these together. Tell us the
-            goal and we'll map out the mix.
+          <p className="mt-4 text-paper/60 max-w-md mx-auto">
+            Most projects use two or three of these together. Tell us the goal and we&apos;ll map
+            out the mix.
           </p>
-          <Link href="/contact" className="btn-primary mt-8 inline-flex bg-ink hover:bg-signal hover:text-paper">
-            Get a Quote
+          <Link
+            href="/contact"
+            className="btn-primary mt-8 inline-flex bg-signal hover:bg-paper hover:text-ink"
+          >
+            Get a quote
           </Link>
         </div>
       </section>
