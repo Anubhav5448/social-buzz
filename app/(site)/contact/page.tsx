@@ -53,8 +53,8 @@ export default function ContactPage() {
               Follow
             </div>
             <div className="flex gap-4 font-mono text-sm uppercase tracking-[0.08em]">
-              <a href="#" className="border border-line px-4 py-2 hover:border-signal hover:text-signal transition-colors">Instagram</a>
-              <a href="#" className="border border-line px-4 py-2 hover:border-signal hover:text-signal transition-colors">LinkedIn</a>
+              <a href="#" className="border border-line px-4 py-2 hover:border-signal hover:text-signal transition-all hover:shadow-[0_0_25px_-4px_var(--tw-shadow-color)] hover:shadow-signal/40">Instagram</a>
+              <a href="#" className="border border-line px-4 py-2 hover:border-signal hover:text-signal transition-all hover:shadow-[0_0_25px_-4px_var(--tw-shadow-color)] hover:shadow-signal/40">LinkedIn</a>
             </div>
           </div>
 

@@ -1,7 +1,7 @@
+
 import type { Metadata } from "next";
 import Link from "next/link";
-import { SERVICES } from "@/lib/services";
-import { ServicesExplorer } from "@/components/services/services-explorer";
+import { ServiceFilterGrid } from "@/components/services/service-filter-grid";
 
 
 export const metadata: Metadata = {
@@ -17,14 +17,7 @@ const TRUST_MARKERS = [
   "No lock-in contracts",
 ];
 
-const CAPABILITIES = [
-  "Strategy",
-  "Content",
-  "Paid Media",
-  "SEO",
-  "Web Build",
-  "Events",
-];
+
 
 const PRINCIPLES = [
   {
@@ -167,7 +160,7 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* INDEX */}
+      {/* INDEX — BENTO GRID */}
       <section className="pt-20 pb-16 md:pt-24 md:pb-20">
         <div className="container-page">
           <h2 className="font-display font-bold text-3xl md:text-5xl leading-[1.1] text-ink mb-6">
@@ -175,28 +168,12 @@ export default function ServicesPage() {
             <br />
             in five parts.
           </h2>
-          <p className="text-ink/60 max-w-md mb-8">
+          <p className="text-ink/60 max-w-md mb-12">
             Pick a discipline to jump straight to it, or scroll through all five below. Most
             engagements end up drawing from more than one.
           </p>
-          <div className="flex flex-wrap gap-3 mb-14 md:mb-20">
-            {CAPABILITIES.map((c) => (
-              <span
-                key={c}
-                className="inline-flex items-center rounded-full border-2 border-signal/40 bg-paper px-5 py-2 font-mono text-xs uppercase tracking-wide text-ink"
-              >
-                {c}
-              </span>
-            ))}
-          </div>
 
-          <div className="relative">
-            <div
-              aria-hidden="true"
-              className="hidden md:block absolute -right-6 -top-10 h-40 w-40 rounded-full border-[16px] border-signal/25"
-            />
-            <ServicesExplorer services={SERVICES} />
-          </div>
+          <ServiceFilterGrid />
         </div>
       </section>
 
@@ -312,7 +289,7 @@ export default function ServicesPage() {
                         href="/contact"
                         className={
                           tier.highlighted
-                            ? "btn-primary bg-signal hover:bg-paper hover:text-ink"
+                            ? "btn-primary bg-gradient-to-r from-signal to-signal/80 shadow-[0_0_30px_-4px_var(--tw-shadow-color)] shadow-signal/50 transition-all hover:shadow-signal/80"
                             : "btn-outline"
                         }
                       >
@@ -328,8 +305,11 @@ export default function ServicesPage() {
       </section>
 
       {/* CLOSING CTA */}
-      <section className="section-rule bg-ink text-paper">
-        <div className="container-page py-20 md:py-24 text-center flex flex-col items-center">
+      <section className="section-rule relative overflow-hidden bg-gradient-to-b from-ink via-ink to-black text-paper">
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="w-[420px] h-[420px] bg-signal/25 rounded-full blur-[100px]" />
+        </div>
+        <div className="container-page py-20 md:py-24 text-center flex flex-col items-center relative z-10">
           <RotatingSeal label="Ask us directly" />
           <h2 className="font-display text-3xl md:text-4xl max-w-lg mx-auto mt-6">
             Not sure which service you need?
@@ -340,7 +320,7 @@ export default function ServicesPage() {
           </p>
           <Link
             href="/contact"
-            className="btn-primary mt-8 inline-flex bg-signal hover:bg-paper hover:text-ink"
+            className="btn-primary mt-8 inline-flex bg-gradient-to-r from-signal to-signal/80 shadow-[0_0_40px_-4px_var(--tw-shadow-color)] shadow-signal/60 transition-all hover:shadow-signal/90 hover:scale-[1.03]"
           >
             Get a quote
           </Link>

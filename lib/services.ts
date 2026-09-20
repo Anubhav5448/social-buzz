@@ -2,6 +2,7 @@ export type Service = {
   slug: string;
   name: string;
   tag: string;
+  category: "SEO" | "Social Media" | "Web Dev";
   summary: string;
   points: string[];
   deliverables: string[];
@@ -15,6 +16,7 @@ export const SERVICES: Service[] = [
     slug: "digital-marketing",
     name: "Digital Marketing",
     tag: "01 — Growth",
+    category: "SEO",
     summary:
       "SEO, social media management, content strategy and email marketing, run together so every channel feeds the next.",
     points: [
@@ -43,6 +45,7 @@ export const SERVICES: Service[] = [
     slug: "graphic-designing",
     name: "Graphic Designing",
     tag: "02 — Identity",
+    category: "Web Dev",
     summary:
       "Logos, branding systems, social creatives and marketing collateral that keep a brand recognisable everywhere it shows up.",
     points: [
@@ -71,6 +74,7 @@ export const SERVICES: Service[] = [
     slug: "web-development",
     name: "Web Development",
     tag: "03 — Build",
+    category: "Web Dev",
     summary:
       "Website design and development, landing pages, e-commerce builds and ongoing maintenance — built to load fast and convert.",
     points: [
@@ -99,6 +103,7 @@ export const SERVICES: Service[] = [
     slug: "performance-marketing",
     name: "Performance Marketing",
     tag: "04 — Paid",
+    category: "Social Media",
     summary:
       "Paid ads across Google and Meta, planned and optimised around measurable ROI rather than vanity metrics.",
     points: [
@@ -127,6 +132,7 @@ export const SERVICES: Service[] = [
     slug: "event-management",
     name: "Event Management",
     tag: "05 — Experience",
+    category: "Social Media",
     summary:
       "Planning and execution of corporate and brand events, product launches and promotions, end to end.",
     points: [

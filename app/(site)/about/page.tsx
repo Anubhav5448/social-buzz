@@ -2,6 +2,15 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SERVICES } from "@/lib/services";
+import {
+  BadgeCheck,
+  Star,
+  TrendingUp,
+  Target,
+  Eye,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
 
 export const metadata: Metadata = {
   title: "About Us — Social Buzz",
@@ -9,10 +18,10 @@ export const metadata: Metadata = {
     "Our story, mission, team, values and achievements — the people behind Social Buzz.",
 };
 
-const ABOUT_BADGES = [
-  { icon: "✓", title: "Proven Process", subtitle: "Quality & Consistency" },
-  { icon: "★", title: "Top Rated Studio", subtitle: "Client Reviews" },
-  { icon: "↗", title: "120+ Campaigns", subtitle: "Shipped & Counting" },
+const ABOUT_BADGES: { Icon: LucideIcon; title: string; subtitle: string }[] = [
+  { Icon: BadgeCheck, title: "Proven Process", subtitle: "Quality & Consistency" },
+  { Icon: Star, title: "Top Rated Studio", subtitle: "Client Reviews" },
+  { Icon: TrendingUp, title: "120+ Campaigns", subtitle: "Shipped & Counting" },
 ];
 
 
@@ -25,13 +34,15 @@ const TEAM = [
   { name: "Devika Rao", role: "Events & Operations" },
 ];
 
-const MISSION_VISION = [
+const MISSION_VISION: { title: string; body: string; Icon: LucideIcon }[] = [
   {
     title: "Mission",
+    Icon: Target,
     body: "To run strategy, design, development, media and events from one desk on one brief — so every brand we work with ships work that looks and performs like a single idea, not five disconnected ones.",
   },
   {
     title: "Vision",
+    Icon: Eye,
     body: "To be the studio ambitious brands call first — small enough to move fast, senior enough to be trusted with the whole brief, not just a slice of it.",
   },
 ];
@@ -73,12 +84,12 @@ export default function AboutPage() {
           <div className="mt-9 flex flex-wrap gap-4">
             <Link
               href="/social-buzz-profile.pdf"
-              className="btn-outline !border-ink/50 !text-ink hover:!border-signal hover:!text-signal inline-flex items-center gap-2"
+              className="btn-outline !border-ink/50 !text-ink hover:!border-signal hover:!text-signal inline-flex items-center gap-2 transition-all hover:shadow-[0_0_30px_-4px_var(--tw-shadow-color)] hover:shadow-signal/40"
             >
               Download Profile
               <span aria-hidden="true">↓</span>
             </Link>
-            <Link href="/contact" className="btn-primary bg-signal hover:bg-paper hover:text-ink">
+            <Link href="/contact" className="btn-primary bg-gradient-to-r from-signal to-signal/80 shadow-[0_0_40px_-4px_var(--tw-shadow-color)] shadow-signal/60 transition-all hover:shadow-signal/90 hover:scale-[1.03]">
               Contact Us
             </Link>
           </div>
@@ -115,19 +126,25 @@ export default function AboutPage() {
               </p>
 
               <div className="flex flex-wrap gap-8">
-                {ABOUT_BADGES.map((b) => (
-                  <div key={b.title} className="flex items-center gap-3">
-                    <span className="w-9 h-9 rounded-full bg-ink/10 border border-ink/15 flex items-center justify-center text-signal text-sm shrink-0">
-                      {b.icon}
-                    </span>
-                    <div>
-                      <div className="font-display text-sm text-ink">{b.title}</div>
-                      <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink/45">
-                        {b.subtitle}
+                {ABOUT_BADGES.map((b) => {
+                  const Icon = b.Icon;
+                  return (
+                    <div key={b.title} className="group flex items-center gap-3">
+                      <span className="w-9 h-9 rounded-full bg-ink/10 border border-ink/15 flex items-center justify-center shrink-0 transition-all duration-300 group-hover:bg-signal/15 group-hover:border-signal/40 group-hover:scale-110">
+                        <Icon
+                          className="h-4 w-4 text-signal transition-transform duration-300 group-hover:rotate-12"
+                          strokeWidth={1.8}
+                        />
+                      </span>
+                      <div>
+                        <div className="font-display text-sm text-ink">{b.title}</div>
+                        <div className="font-mono text-[11px] uppercase tracking-[0.06em] text-ink/45">
+                          {b.subtitle}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -137,7 +154,10 @@ export default function AboutPage() {
       {/* OUR TEAM */}
       <section className="section-rule">
         <div className="container-page py-16">
-          <div className="eyebrow mb-3">Who's on it</div>
+          <div className="eyebrow mb-3 inline-flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-signal" strokeWidth={2} />
+            Who's on it
+          </div>
           <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
             Our team
           </h2>
@@ -165,12 +185,26 @@ export default function AboutPage() {
             Mission &amp; Vision
           </h2>
           <div className="grid md:grid-cols-2 gap-10">
-            {MISSION_VISION.map((m) => (
-              <div key={m.title} className="border-t-2 border-signal pt-6">
-                <h3 className="font-display text-2xl mb-3">{m.title}</h3>
-                <p className="text-ink/65 leading-relaxed">{m.body}</p>
-              </div>
-            ))}
+            {MISSION_VISION.map((m) => {
+              const Icon = m.Icon;
+              return (
+                <div
+                  key={m.title}
+                  className="group border-t-2 border-signal pt-6 transition-colors"
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-10 h-10 rounded-full bg-signal/10 flex items-center justify-center transition-all duration-300 group-hover:bg-signal/20 group-hover:scale-110">
+                      <Icon
+                        className="h-5 w-5 text-signal transition-transform duration-300 group-hover:rotate-6"
+                        strokeWidth={1.8}
+                      />
+                    </span>
+                    <h3 className="font-display text-2xl">{m.title}</h3>
+                  </div>
+                  <p className="text-ink/65 leading-relaxed">{m.body}</p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -178,23 +212,40 @@ export default function AboutPage() {
       {/* EXPERTISE */}
       <section className="section-rule bg-paperdim">
         <div className="container-page py-16">
-          <div className="eyebrow mb-3">What we're good at</div>
+          <div className="eyebrow mb-3 inline-flex items-center gap-2">
+            <Sparkles className="h-4 w-4 text-signal" strokeWidth={2} />
+            What we're good at
+          </div>
           <h2 className="font-display text-3xl md:text-4xl max-w-xl mb-12">
             Our expertise
           </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {SERVICES.map((s) => (
-              <div key={s.slug} className="bg-paper border border-line p-7">
-                <div className="font-mono text-[11px] tracking-[0.14em] text-signal mb-3">
-                  {s.tag}
+              <div
+                key={s.slug}
+                className="group bg-paper border border-line p-7 transition-all duration-300 hover:border-signal/50 hover:shadow-[0_0_35px_-6px_var(--tw-shadow-color)] hover:shadow-signal/40 hover:-translate-y-1"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className="font-mono text-[11px] tracking-[0.14em] text-signal">
+                    {s.tag}
+                  </div>
+                  <span className="w-8 h-8 rounded-full bg-signal/10 flex items-center justify-center transition-all duration-300 group-hover:bg-signal/20 group-hover:scale-110">
+                    <Sparkles
+                      className="h-3.5 w-3.5 text-signal transition-transform duration-300 group-hover:rotate-12"
+                      strokeWidth={2}
+                    />
+                  </span>
                 </div>
                 <h3 className="font-display text-xl mb-2">{s.name}</h3>
                 <p className="text-sm text-ink/60 leading-relaxed">{s.summary}</p>
                 <Link
                   href={`/services/${s.slug}`}
-                  className="inline-block mt-4 font-mono text-[11px] uppercase tracking-[0.08em] text-ink/60 hover:text-signal transition-colors"
+                  className="inline-flex items-center gap-1 mt-4 font-mono text-[11px] uppercase tracking-[0.08em] text-ink/60 hover:text-signal transition-colors"
                 >
-                  Learn more →
+                  Learn more
+                  <span className="transition-transform duration-300 group-hover:translate-x-1">
+                    →
+                  </span>
                 </Link>
               </div>
             ))}

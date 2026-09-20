@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Lora, Open_Sans } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import { cn } from "@/lib/utils";
+
 
 // Titles — Lora, used everywhere via the `font-display` class.
 const display = Lora({
@@ -33,8 +36,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
-            <body className={`${display.variable} ${body.variable} ${mono.variable} font-body`}>
+    <html lang="en" className={cn("font-sans", GeistSans.variable)}>            <body className={`${display.variable} ${body.variable} ${mono.variable} font-body`}>
         {children}
       </body>
     </html>

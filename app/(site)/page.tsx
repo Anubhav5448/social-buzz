@@ -2,46 +2,64 @@ import Link from "next/link";
 import HeroExperience from "@/components/HeroExperience";
 import { SERVICES } from "@/lib/services";
 import { getFeaturedProjects } from "@/lib/projects";
+import {
+  Compass,
+  Lightbulb,
+  Sparkles,
+  Rocket,
+  Target,
+  BarChart3,
+  Users,
+  Megaphone,
+  type LucideIcon,
+} from "lucide-react";
 
 // Always render at request time — avoids Next trying to prerender at
 // Docker build time, when no real DATABASE_URL is available yet.
 export const dynamic = "force-dynamic";
 
-const WHY = [
+const WHY: { title: string; body: string; Icon: LucideIcon }[] = [
   {
     title: "One desk, five disciplines",
     body: "Strategy, design, build, paid media and events sit in the same room — no hand-off gaps, no repeated briefings.",
+    Icon: Users,
   },
   {
     title: "Reporting you can read",
     body: "Every engagement ends the month with numbers that map back to leads and revenue, not just impressions.",
+    Icon: BarChart3,
   },
   {
     title: "Built for momentum",
     body: "We plan in campaigns, not one-off tasks, so this month's work compounds into next month's results.",
+    Icon: Rocket,
   },
 ];
 
-const PROCESS = [
+const PROCESS: { step: string; title: string; body: string; Icon: LucideIcon }[] = [
   {
     step: "01",
     title: "Discover",
     body: "We audit what's working, what isn't, and where the brief actually needs to focus.",
+    Icon: Compass,
   },
   {
     step: "02",
     title: "Strategize",
     body: "A plan across design, media and build — one brief, not five disconnected ones.",
+    Icon: Lightbulb,
   },
   {
     step: "03",
     title: "Create",
     body: "Design, content and campaigns come together in parallel, checked in on weekly.",
+    Icon: Sparkles,
   },
   {
     step: "04",
     title: "Launch & Grow",
     body: "We ship, measure, and keep iterating against the numbers that actually matter.",
+    Icon: Rocket,
   },
 ];
 
@@ -122,15 +140,29 @@ export default async function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-10 border-t border-line pt-12">
-            {WHY.map((w, i) => (
-              <div key={w.title} className="border-t-2 border-signal pt-6">
-                <div className="font-mono text-[11px] text-ink/40 mb-3">
-                  0{i + 1}
+            {WHY.map((w, i) => {
+              const Icon = w.Icon;
+              return (
+                <div
+                  key={w.title}
+                  className="group border-t-2 border-signal pt-6 transition-colors"
+                >
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="font-mono text-[11px] text-ink/40">
+                      0{i + 1}
+                    </div>
+                    <span className="w-10 h-10 rounded-full bg-signal/10 flex items-center justify-center transition-all duration-300 group-hover:bg-signal/20 group-hover:scale-110">
+                      <Icon
+                        className="h-5 w-5 text-signal transition-transform duration-300 group-hover:rotate-6"
+                        strokeWidth={1.8}
+                      />
+                    </span>
+                  </div>
+                  <h3 className="font-display text-xl mb-3">{w.title}</h3>
+                  <p className="text-ink/60 text-sm leading-relaxed">{w.body}</p>
                 </div>
-                <h3 className="font-display text-xl mb-3">{w.title}</h3>
-                <p className="text-ink/60 text-sm leading-relaxed">{w.body}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -143,17 +175,36 @@ export default async function HomePage() {
             <h2 className="font-display text-3xl md:text-4xl">Our process</h2>
           </div>
 
-          <div className="relative grid sm:grid-cols-2 md:grid-cols-4 gap-8">
-            <div className="hidden md:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-line" />
-            {PROCESS.map((p, i) => (
-              <div key={p.step} className={`relative ${i % 2 === 1 ? "md:mt-10" : ""}`}>
-                <div className="w-12 h-12 rounded-full bg-paper border border-line flex items-center justify-center font-display text-lg text-signal mb-5 relative z-10">
-                  {p.step}
+          <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-12">
+            {/* Horizontal connector line — desktop only, aligned to icon center */}
+            <div
+              aria-hidden="true"
+              className="hidden md:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-line"
+            />
+
+            {PROCESS.map((p) => {
+              const Icon = p.Icon;
+              return (
+                <div
+                  key={p.step}
+                  className="group relative flex flex-col items-center text-center"
+                >
+                  <div className="w-12 h-12 rounded-full bg-paper border border-line flex items-center justify-center mb-5 relative z-10 transition-all duration-300 group-hover:border-signal group-hover:scale-110 group-hover:shadow-[0_0_25px_-4px_var(--tw-shadow-color)] group-hover:shadow-signal/50">
+                    <Icon
+                      className="h-5 w-5 text-signal transition-transform duration-300 group-hover:rotate-12"
+                      strokeWidth={1.8}
+                    />
+                  </div>
+                  <div className="font-mono text-[10px] text-ink/40 mb-1">
+                    {p.step}
+                  </div>
+                  <h3 className="font-display text-lg mb-2">{p.title}</h3>
+                  <p className="text-ink/60 text-sm leading-relaxed max-w-[15rem]">
+                    {p.body}
+                  </p>
                 </div>
-                <h3 className="font-display text-lg mb-2">{p.title}</h3>
-                <p className="text-ink/60 text-sm leading-relaxed">{p.body}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -162,7 +213,10 @@ export default async function HomePage() {
       <section id="services" className="section-rule">
         <div className="container-page py-20">
           <div className="text-center max-w-xl mx-auto mb-14">
-            <div className="eyebrow mb-3 justify-center flex">What we do</div>
+            <div className="eyebrow mb-3 justify-center flex items-center gap-2">
+              <Target className="h-4 w-4 text-signal" strokeWidth={2} />
+              What we do
+            </div>
             <h2 className="font-display text-3xl md:text-4xl">
               Five disciplines, covered in full on one page.
             </h2>
@@ -172,7 +226,7 @@ export default async function HomePage() {
             {SERVICES[0] && (
               <Link
                 href={`/services#${SERVICES[0].slug}`}
-                className="group border border-line p-8 md:p-10 flex flex-col justify-between hover:border-signal transition-colors md:row-span-2"
+                className="group relative overflow-hidden border border-line p-8 md:p-10 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-signal/60 hover:shadow-[0_0_50px_-4px_var(--tw-shadow-color)] hover:shadow-signal/50 md:row-span-2"
               >
                 <div>
                   <div className="font-mono text-[11px] tracking-[0.14em] text-signal mb-4">
@@ -196,7 +250,7 @@ export default async function HomePage() {
                 <Link
                   key={s.slug}
                   href={`/services#${s.slug}`}
-                  className="group border border-line p-6 flex flex-col justify-between hover:border-signal transition-colors"
+                  className="group relative overflow-hidden border border-line p-6 flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-signal/60 hover:shadow-[0_0_40px_-4px_var(--tw-shadow-color)] hover:shadow-signal/50"
                 >
                   <div>
                     <div className="font-mono text-[11px] tracking-[0.14em] text-signal mb-3">
@@ -214,7 +268,7 @@ export default async function HomePage() {
           </div>
 
           <div className="mt-10 text-center">
-            <Link href="/services" className="btn-outline">
+            <Link href="/services" className="btn-outline hover:shadow-[0_0_30px_-4px_var(--tw-shadow-color)] hover:shadow-signal/50 transition-shadow">
               All Services
             </Link>
           </div>
@@ -238,7 +292,7 @@ export default async function HomePage() {
               {projects.map((item, i) => (
                 <div
                   key={item.id}
-                  className={`border border-line overflow-hidden flex flex-col justify-between hover:border-signal transition-colors ${
+                  className={`border border-line overflow-hidden flex flex-col justify-between transition-all duration-300 hover:-translate-y-1 hover:border-signal/60 hover:shadow-[0_0_50px_-4px_var(--tw-shadow-color)] hover:shadow-signal/50 ${
                     i === 0 ? "md:row-span-2" : ""
                   }`}
                 >
@@ -272,7 +326,10 @@ export default async function HomePage() {
       <section id="testimonials" className="section-rule">
         <div className="container-page py-20">
           <div className="text-center max-w-xl mx-auto mb-14">
-            <div className="eyebrow mb-3 justify-center flex">Kind words</div>
+            <div className="eyebrow mb-3 justify-center flex items-center gap-2">
+              <Megaphone className="h-4 w-4 text-signal" strokeWidth={2} />
+              Kind words
+            </div>
             <h2 className="font-display text-3xl md:text-4xl">What clients say.</h2>
           </div>
 
@@ -289,7 +346,7 @@ export default async function HomePage() {
 
           <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
             {TESTIMONIALS.slice(1).map((t) => (
-              <div key={t.name} className="bg-paperdim border border-line p-6">
+              <div key={t.name} className="bg-paperdim border border-line p-6 transition-all duration-300 hover:border-signal/50 hover:shadow-[0_0_35px_-6px_var(--tw-shadow-color)] hover:shadow-signal/40">
                 <p className="text-ink/70 leading-relaxed text-sm">"{t.quote}"</p>
                 <div className="mt-5">
                   <div className="font-display text-base">{t.name}</div>
@@ -340,7 +397,9 @@ export default async function HomePage() {
       {/* CTA */}
       <section className="section-rule">
         <div className="container-page py-20">
-          <div className="bg-signal rounded-2xl px-8 py-12 md:px-16 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="relative overflow-hidden rounded-2xl px-8 py-12 md:px-16 md:py-16 flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-br from-signal via-signal to-ink shadow-[0_0_90px_-10px_var(--tw-shadow-color)] shadow-signal/60">
+            <div className="absolute -top-24 -right-24 w-72 h-72 bg-signal/40 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-ink/30 rounded-full blur-3xl pointer-events-none" />
             <div className="text-center md:text-left">
               <h2 className="font-display text-3xl md:text-4xl text-paper leading-tight max-w-md">
                 Ready to put your brand on air?
@@ -354,7 +413,7 @@ export default async function HomePage() {
             <div className="flex flex-col items-center md:items-end gap-3 shrink-0">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 bg-ink text-paper px-7 py-3.5 font-mono text-[13px] tracking-[0.08em] uppercase transition-opacity hover:opacity-85"
+                className="relative z-10 inline-flex items-center gap-2 bg-gradient-to-r from-ink to-ink/80 text-paper px-7 py-3.5 font-mono text-[13px] tracking-[0.08em] uppercase transition-all hover:shadow-[0_0_35px_-2px_var(--tw-shadow-color)] hover:shadow-signal/70 hover:-translate-y-0.5"
               >
                 Get a Quote
               </Link>

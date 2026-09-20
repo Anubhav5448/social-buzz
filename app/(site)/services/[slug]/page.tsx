@@ -42,7 +42,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
       </section>
 
       <section className="container-page pb-16">
-        <div className="relative w-full h-[280px] md:h-[420px] rounded-2xl overflow-hidden bg-paperdim">
+         <div className="relative w-full h-[280px] md:h-[420px] rounded-2xl overflow-hidden bg-paperdim ring-1 ring-signal/20 shadow-[0_0_45px_-8px_var(--tw-shadow-color)] shadow-signal/40">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={service.heroImage}
@@ -85,7 +85,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
                 </p>
               ))}
             </div>
-            <div className="relative w-full h-[220px] md:h-[320px] rounded-2xl overflow-hidden bg-paperdim">
+            <div className="relative w-full h-[220px] md:h-[320px] rounded-2xl overflow-hidden bg-paperdim ring-1 ring-signal/20 shadow-[0_0_45px_-8px_var(--tw-shadow-color)] shadow-signal/40">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={service.overviewImage}
@@ -123,7 +123,7 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
           </p>
           <Link
             href="/contact"
-            className="btn-primary mt-8 inline-flex bg-signal hover:bg-paper hover:text-ink"
+            className="btn-primary mt-8 inline-flex bg-gradient-to-r from-signal to-signal/80 shadow-[0_0_40px_-4px_var(--tw-shadow-color)] shadow-signal/60 transition-all hover:shadow-signal/90 hover:scale-[1.03]"
           >
             Get a Quote
           </Link>

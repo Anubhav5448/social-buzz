@@ -51,7 +51,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
         </h1>
 
         {post.media_url && (
-          <div className="mb-10 rounded-2xl overflow-hidden border border-line">
+          <div className="mb-10 rounded-2xl overflow-hidden border border-line ring-1 ring-signal/20 shadow-[0_0_45px_-8px_var(--tw-shadow-color)] shadow-signal/40">
             {post.media_type === "video" ? (
               <video src={post.media_url} controls className="w-full" />
             ) : (
@@ -122,7 +122,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                   <span className="inline-flex w-fit items-center rounded-full bg-paperdim px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.08em] text-ink/70 mb-5">
                     {p.category}
                   </span>
-                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-paperdim">
+                  <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-paperdim transition-all duration-300 group-hover:shadow-[0_0_40px_-6px_var(--tw-shadow-color)] group-hover:shadow-signal/40">
                     {p.media_url && p.media_type !== "video" && (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
