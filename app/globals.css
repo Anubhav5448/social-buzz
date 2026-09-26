@@ -34,7 +34,7 @@ html.lenis body {
 }
 
 body {
-  background-color: #12121A;
+  background-color: #121212;
   color: #FAF9F4;
   /* font-hero and font-nav reuse the same loaded fonts as font-display
      and font-body — see app/layout.tsx for why. */
